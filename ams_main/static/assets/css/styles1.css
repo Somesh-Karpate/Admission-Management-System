@@ -1,0 +1,675 @@
+/* ========== GOOGLE FONTS ========== */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
+
+/*========== VARIABLES CSS ==========*/
+:root {
+  --header-height: 3.5rem;
+  --nav-width: 280px;
+
+  /*========== Colors ==========*/
+  --first-color: #6923D0;
+  --first-color-light: #F4F0FA;
+  --title-color: #19181B;
+  --text-color: #58555E;
+  --text-color-light: #A5A1AA;
+  --body-color: #F9F6FD;
+  --container-color: #FFFFFF;
+
+  /*========== Font and typography ==========*/
+  --body-font: 'Poppins', sans-serif;
+  --normal-font-size: .938rem;
+  --small-font-size: .75rem;
+  --smaller-font-size: .75rem;
+
+  /*========== Font weight ==========*/
+  --font-medium: 500;
+  --font-semi-bold: 600;
+
+  /*========== z index ==========*/
+  --z-fixed: 100;
+}
+
+@media screen and (min-width: 1024px) {
+  :root {
+    --normal-font-size: 1rem;
+    --small-font-size: .875rem;
+    --smaller-font-size: .813rem;
+  }
+}
+
+/*========== BASE ==========*/
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: var(--header-height) 0 0 0;
+  padding: 1rem 1rem 0;
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+  background-color: var(--body-color);
+  color: var(--text-color);
+}
+
+h3 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/*========== HEADER ==========*/
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: var(--container-color);
+  box-shadow: 0 1px 0 rgba(22, 8, 43, 0.1);
+  display: flex;
+  padding: 15px 15px;
+  z-index: var(--z-fixed);
+  /* justify-content: center; */
+  align-items: center;
+  justify-content: end;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+  justify-content: end;
+}
+
+.logout-btn {
+/* float: right; */
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 15px; /* Adjust margin as needed */
+  }
+
+.logout-btn:hover {
+    color: #0056b3;
+  }
+  .logout-link {
+    text-decoration: none;
+  }
+
+  .menu-toggle{
+    display : none; 
+  }
+
+
+/*========== NAV ==========*/
+
+
+
+  .nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+  
+    height: 100vh;
+    
+    padding: 1rem 1rem 0;
+    background-image: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
+    box-shadow: 1px 0 0 rgba(22, 8, 43, 0.1);
+    z-index: var(--z-fixed);
+    transition: .4s;
+    
+  }
+  
+  .nav__container {
+    /* width: 100px; */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 3rem;
+    overflow: auto;
+    scrollbar-width: none; /* For mozilla */
+    /* align-items: center; */
+    justify-content: center;
+  }
+  
+  /* For Google Chrome and others */
+  .nav__container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .nav__logo {
+    font-weight: var(--font-semi-bold);
+    margin-bottom: 2.5rem;
+  }
+  
+  .nav__list, 
+  .nav__items {
+    display: grid;
+  }
+  
+  .nav__list {
+    row-gap: 2.5rem;
+  }
+  
+  .nav__items {
+    row-gap: 1.5rem;
+  }
+  
+  .nav__subtitle {
+    font-size: var(--normal-font-size);
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+    color: var(--text-color-light);
+  }
+  
+  .nav__link {
+    display: flex;
+    align-items: center;
+    color: var(--text-color);
+  }
+  
+  .nav__link:hover {
+    color: var(--first-color);
+  }
+  
+  .nav__icon {
+    font-size: 1.2rem;
+    margin-right: .5rem;
+  }
+  
+  .nav__name {
+    font-size: medium;
+    font-weight: var(--font-medium);
+    white-space: nowrap;
+  }
+  
+  .nav__logout {
+    margin-top: 5rem;
+  }
+  
+  /* Dropdown */
+  .nav__dropdown {
+    overflow: hidden;
+    max-height: 21px;
+    transition: .4s ease-in-out;
+  }
+  
+  .nav__dropdown-collapse {
+    background-color: var(--first-color-light);
+    border-radius: .25rem;
+    margin-top: 1rem;
+  }
+  
+  .nav__dropdown-content {
+    display: grid;
+    row-gap: .5rem;
+    padding: .75rem 2.5rem .75rem 1.8rem;
+  }
+  
+  .nav__dropdown-item {
+    font-size: var(--smaller-font-size);
+    font-weight: var(--font-medium);
+    color: var(--text-color);
+  }
+  
+  .nav__dropdown-item:hover {
+    color: var(--first-color);
+  }
+  
+  .nav__dropdown-icon {
+    margin-left: auto;
+    transition: .4s;
+  }
+  
+  /* Show dropdown collapse */
+  .nav__dropdown:hover {
+    max-height: 100rem;
+  }
+  
+  /* Rotate icon arrow */
+  .nav__dropdown:hover .nav__dropdown-icon {
+    transform: rotate(180deg);
+  }
+
+
+  .student-details {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .student-details img {
+    color:#FFFFFF;
+    width: 100px;
+    border-radius: 50%;
+  }
+  
+  .student-details h3 {
+    font-size: 22px;
+  }
+
+
+  #date-time {
+    font-family: Arial, sans-serif;
+    font-size: var(--small-font-size);
+    font-weight: var(--font-medium);
+}
+#current-date, #current-time {
+    margin-right: 20px;
+}
+
+footer {
+    background-color: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
+    padding: 5px;
+    text-align: center;
+  }
+
+
+/* ====== Main Body ===== */
+
+.dashboard {
+  background-color: var(--body-color);
+    margin-left: 0;
+    width: 100%;
+    height: 1000px;
+  }
+  
+  .content-layers {
+    display: flex;
+    flex-flow: column;
+    height: calc(100vh - 100px);
+    margin: 50px;
+    gap: 50px;
+  }
+
+  
+  
+   .top-layer {
+    display: flex;
+    box-shadow: 8px 8px rgba(128, 136, 156, 0.31);
+    justify-content: space-between;
+    padding: 10px 10px;
+    background-color : var(--first-color-light);
+    height: 55%;
+    border-radius: 15px;
+    align-items: center;
+    border: 2px ridge #999;
+
+    /* border-radius: 20%; */
+  } 
+  
+  .top-layer-text {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    gap: 5px;
+    padding-left: 20px;
+  }
+  
+  .top-layer-text h3 {
+    font-size: 27px;
+    margin-bottom: 10px;
+  }
+  
+  .top-layer-text a {
+    text-decoration: none;
+    background-image: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
+    border-radius: 15px;
+    color: rgb(255, 255, 255);
+    width: 150px;
+    font-weight: 300;
+    padding: 10px 25px;
+    transition: filter 0.5s ease;
+  }
+  
+  .top-layer-text a:hover {
+    filter: none;
+    -webkit-filter: drop-shadow(0px 4px 10px rgb(62, 59, 59));
+  }
+  
+  .top-layer-text a i {
+    position: relative;
+    left: 50px;
+  }
+  
+  .top-layer-img {
+    position: relative;
+    right: 2%;
+    height: 300px;
+  }
+  
+  .top-layer-img img {
+    width: 125%;
+    height: 90%;
+  }
+  .top-layer-apply-button a:hover{
+    background-color: darkblue;
+  }
+  
+  .bottom-layer {
+    display: flex;
+    height: 65%;
+    gap: 50px;
+  }
+  
+  .progress-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+  
+  }
+
+  .progress-table th, .progress-table td {
+    border: 1.5px ridge #070000;
+    padding: 8px;
+    text-align: center;
+    /* align-items : center; */
+  }
+  .progress-table td {
+    background-color: rgb(255, 255, 255);
+  }
+
+  .progress-table th {
+    background-image: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
+    color : whitesmoke;
+  }
+
+  .progress-layer {
+    display: flex;
+    box-shadow: 8px 8px rgba(128, 136, 156, 0.31);
+    justify-content: space-between;
+    flex-flow: column;
+    width: 50%;
+    height: 130%;
+    background-color : var(--first-color-light);
+    border-radius: 15px;
+    border: 2px ridge #999;
+    padding: 50px;
+    color: rgb(27, 27, 27);
+    align-items: center;
+    font-size: 15px;
+  }
+  
+  .progress-layer h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  
+  .progress-element h4 {
+    font-size: 18px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgb(0, 0, 0);
+  }
+  
+  .progress-element {
+    display: grid;
+    grid-template-columns: 70% 30%;
+  }
+  
+  .progress-element a:hover{
+    color: rgb(255, 255, 255);
+  }
+  
+  .p-element{
+    align-items: center;
+    background-color: #ffffff;
+    height: 60px;
+  }
+  
+  .section1{
+    width: 50%;
+    display: flex;
+
+    flex-flow: column;
+    height: 130%;
+    
+    border-radius: 25px;
+    padding-left: 30px;
+    /* padding-top: 30px; */
+  }
+  .news-layer {
+    display: flex;
+    box-shadow: 8px 8px rgb(185, 198, 231); 
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    width: 95%;
+    height: 100%;
+    background-image: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
+    border-radius: 15px;
+    /* padding: 50px; */
+    
+  }
+  
+  .news-layer h3 {
+    padding-bottom: 15px;
+    padding-top: 15px;
+  }
+  
+  .news-layer a {
+    text-decoration: none;
+    color: rgba(140, 172, 255, 1);
+    border-bottom: 1px solid rgb(200, 200, 200);
+  }
+  
+  .news-layer a:hover {
+    color: blue;
+  }
+  
+  
+  a{
+    text-decoration: none;
+  }
+
+  
+#scrolling-section {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #ccc;
+  }
+  
+  #scroll-content {
+    position: absolute;
+    bottom: 0;
+    animation: scroll 10s linear infinite;
+  }
+  
+  @keyframes scroll {
+    0% { transform: translateY(0%); }
+    100% { transform: translateY(-100%); }
+  }
+
+
+/*===== Show menu =====*/
+.show-menu {
+  left: 0;
+}
+
+/*===== Active link =====*/
+.active {
+  color: var(--first-color);
+}
+
+/* ========== MEDIA QUERIES ==========*/
+/* For small devices reduce search*/
+@media (max-width: 1022px) {
+  .menu-toggle{
+    display: block;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  body {
+    padding: 1rem 3rem 0 6rem;
+  }
+  .header {
+    padding: 0 3rem 0 6rem;
+  }
+  .header__container {
+    height: calc(var(--header-height) );
+  }
+  .header__search {
+    width: 300px;
+    padding: .55rem .75rem;
+  }
+  .header__toggle {
+    display: none;
+  }
+  .header__logo {
+    display: block;
+  }
+  .header__img {
+    width: 40px;
+    height: 40px;
+    order: 1;
+  }
+  .nav {
+    left: 0;
+    padding: 1.2rem 1.5rem 0;
+    width: 68px; /* Reduced navbar */
+  }
+  .nav__items {
+    row-gap: 1.7rem;
+  }
+  .nav__icon {
+    font-size: 1.3rem;
+  }
+
+  /* Element opacity */
+  .nav__logo-name, 
+  .nav__name, 
+  .nav__subtitle, 
+  .nav__dropdown-icon {
+    opacity: 0;
+    transition: .3s;
+  }
+  
+  
+  /* Navbar expanded */
+  .nav:hover {
+    width: 250px;
+  }
+  
+  /* Visible elements */
+  .nav:hover .nav__logo-name {
+    opacity: 1;
+  }
+  .nav:hover .nav__subtitle {
+    opacity: 1;
+  }
+  .nav:hover .nav__name {
+    opacity: 1;
+  }
+  .nav:hover .nav__dropdown-icon {
+    opacity: 1;
+  }
+}
+
+
+.hr-text {
+    line-height: 1em;
+    position: relative;
+    outline: 0;
+    border: 0;
+    color: black;
+    text-align: center;
+    height: 1.5em;
+    opacity: .5;
+    &:before {
+      content: '';
+      /* // use the linear-gradient for the fading effect */
+      /* // use a solid background color for a solid bar */
+      background: linear-gradient(to right, transparent, #818078, transparent);
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 100%;
+      height: 1px;
+    }
+    &:after {
+      content: attr(data-content);
+      position: relative;
+      display: inline-block;
+      color: black;
+  
+      padding: 0 .5em;
+      line-height: 1.5em;
+      /* // this is really the only tricky part, you need to specify the background color of the container element... */
+      color: #818078;
+      background-color: #fcfcfa;
+    }
+  }
+
+  .container{
+    gap: 10px;
+  }
+
+
+  .left-aligned-content {
+    text-align: left;
+}
+
+
+
+/* responsive */
+@media screen and (max-width: 1023px) {
+  /* Adjust header and navigation styles for smaller screens */
+  .header {
+    padding: 0 1rem;
+  }
+
+  .nav {
+    padding: 1rem;
+    width: 100%; /* Occupy full width */
+    left: -100%; /* Initially hidden */
+  }
+
+  /* Show menu button for smaller screens */
+  .header__toggle {
+    display: block;
+  }
+
+  /* Adjust the layout of header and navigation elements */
+  .header__container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header__logo {
+    margin-bottom: 1rem;
+  }
+
+  /* Adjust padding and font size for better visibility */
+  body {
+    padding: calc(var(--header-height) + 1rem) 1rem 0;
+    font-size: 0.875rem;
+  }
+
+  /* Show navigation when the menu is toggled */
+  .show-menu .nav {
+    left: 0;
+  }
+}
+
+
+
+
+
+
+

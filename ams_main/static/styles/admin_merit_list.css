@@ -1,0 +1,249 @@
+/* Style for the body */
+body {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Style for the h1 */
+h1 {
+    text-align: center;
+}
+
+h2 {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px
+}
+
+/* Style for the form */
+form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Style for the select */
+select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Style for the table */
+table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+/* Style for the table headers */
+th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: left;
+}
+
+/* Style for the table cells */
+td {
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+/* Style for the submit button */
+input[type="submit"] {
+    padding: 10px 20px;
+    background-color: rgb(251, 158, 65);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style for the button */
+button[type="submit"] {
+    padding: 10px 20px;
+    background-color: rgb(251, 158, 65);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+/* Hover effect for buttons */
+button:hover, input[type="submit"]:hover {
+    background-color: rgb(110, 58, 7);
+}
+
+
+.main-body {
+    width: 100%;
+    display: flex;
+  }
+  
+  /* SIDEBAR */
+  
+  .sidebar {
+    display: flex;
+    position: fixed;
+    width: 20%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(160, 27, 0, 1), rgba(255, 160, 18, 1));
+    justify-content: center;
+  }
+  
+  .sidebar-elements {
+    display: flex;
+    flex-flow: column;
+    /* background-color: pink; */
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 25px;
+  }
+  
+  .student-details {
+    /* background-color: red; */
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+  
+  .student-details img {
+    width: 100px;
+    border-radius: 50%;
+  }
+  
+  .student-details h3 {
+    font-size: 22px;
+  }
+  
+  .sidebar-buttons {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+  }
+  
+  .route-buttons,
+  .logout-buttons {
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .button {
+    /* background-color: antiquewhite; */
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 16px;
+    padding: 0px 30%;
+    border-radius: 15px;
+    gap: 25px;
+    text-decoration: none;
+    transition: background-color 0.5s ease;
+  }
+  
+  .button:hover {
+    background-color: rgb(251, 158, 65);
+  }
+
+  .sidebar h3,
+.sidebar p,
+.sidebar i {
+  color: white;
+}
+
+
+.dashboard {
+    background-color: #fff;
+    margin-left: 20%;
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    flex-flow: column;
+  }
+  
+  .chart-layer {
+    display: flex;
+    /* background-color: blue; */
+    justify-content: space-evenly;
+  }
+  
+  .left-chart,
+  .right-chart {
+    background-color: #fff;
+    height: 400px;
+    width: 550px;
+    margin: 50px;
+    border-radius: 25px;
+    filter: none;
+    -webkit-filter: drop-shadow(0px 4px 15px rgb(234, 234, 234));
+  }
+  
+  .application-layer {
+    display: flex;
+    flex-flow: column;
+    margin: 50px;
+    height: 100%;
+    gap: 50px;
+    width: 100%;
+  }
+  
+  .application-details {
+    display: flex;
+    flex-flow: column;
+  }
+  
+  .application {
+    display: grid;
+    height: 100%;
+    align-items: center;
+    grid-template-columns: repeat(5, 1fr); /* Adjust the number of columns as needed */
+    border-bottom: 1px solid rgb(240, 240, 240);
+  }
+  
+  .application .application-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 50px;
+    margin: 10px 0px;
+    border-radius: 15px;
+  }
+  
+  .application-status.pending {
+    background-color: red;
+  }
+  
+  .application-status.remark {
+    background-color: yellow;
+  }
+  
+  .application-status.approved {
+    background-color: green;
+  }
+  
+  .application .application-actions {
+    display: flex;
+    gap: 25px;
+    font-size: 24px;
+  }
+  
+  .application-actions .view-form {
+    color: blue;
+  }
+  
+  .application-actions .delete-form {
+    color: red;
+  }
+  
+  .application-footer {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin-left: -50px;
+  }
+  
+

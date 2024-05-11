@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>template</title>
+    <meta name="description" content="" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{%static 'styles/student.css'%}" />
+    <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+  </head>
+
+  <body id="body-pd">
+    <header class="header" id="header">
+        <div class="header__toggle">
+            <i class='bx bx-menu' id="header-toggle"></i>
+        </div>
+
+        <div >
+            <a href="/signout" class="logout-link">
+              <button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button>
+            </a>
+        </div>
+        
+    </header>
+
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div class="nav__list">
+              <a  class="nav__link">
+                <i class='bx bx-dots-vertical-rounded nav__icon' ></i>
+                <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"style="color:#FFFFFF;
+                width: 100px;
+                border-radius: 50%;"/>
+            </a>
+                
+            {% if user.is_authenticated %} {% for user_data in all_user_data %}
+           
+              <a  class="nav__link">
+                <i class='bx bx-tag-alt nav__icon' ></i>
+                <h3 class="nav__name">{{ user_data.first_name }} {{ user_data.last_name }}</h3>
+            </a>
+            {% endfor %} {% endif %}
+           
+
+                <div class="nav__list">
+                    <a href="/dashboard" class="nav__link ">
+                    <i class='bx bx-grid-alt nav__icon' ></i>
+                        <span class="nav__name">Dashboard</span>
+                    </a>
+
+                    <a href="/user_profile" class="nav__link ">
+                        <i class='bx bx-user nav__icon' ></i>
+                        <span class="nav__name">My Profile</span>
+                    </a>
+                    
+                    <a href="/application" class="nav__link active">
+                        <i class='bx bxs-file nav__icon' ></i>
+                        <span class="nav__name">Application</span>
+                    </a>
+
+                    <a href="/approval" class="nav__link ">
+                        <i class='bx bx-bookmark nav__icon' ></i>
+                        <span class="nav__name">Approval</span>
+                    </a>
+
+                    <a href="/merit_list" class="nav__link">
+                        <i class='bx bx-folder nav__icon' ></i>
+                        <span class="nav__name">Merit List</span>
+                    </a>
+
+                   
+                </div>
+            </div>
+
+       
+            <a  class="nav__link">
+              <i class='bx bx-timer nav__icon' ></i>
+              <div id="clock"></div>
+          </a>
+              
+        
+        </nav>
+    </div>
+    <br>
+    <div class="container1"> 
+      <h1>Personal Details</h1>
+      <hr class="hr-text">
+  </div>
+        <!-- START YOUR CODE HERE -->
+        <div class="temp">
+          <div class="container">
+            <form method="POST" action="/personal_details" id="myForm" >
+              {% csrf_token %}
+              <div class="form first">
+                {% if form.errors %}
+
+                <ul class="errorlist">
+                  {% for field, errors in form.errors.items %}
+                  <li>{{ field }}: {{ errors.0 }}</li>
+                  {% endfor %}
+                </ul>
+                {% endif %}
+
+                <div class="details personal">
+          
+                  <div class="fields">
+                    <div class="input-field">
+                      <label for="{{ form.first_name.id_for_label }}"
+                        >First Name</label
+                      >
+                      {% comment %} {% if form.first_name.field.widget.attrs.readonly %}
+                      <p>{{ form.first_name.value }}</p>
+                      {% else %} {% endcomment %}
+                      {{ form.first_name }}
+                      {% comment %} {% endif %} {% endcomment %}
+                      <span id="first_name_error" class="error-message"></span>
+                      <style>
+                        .error-message {
+                          color: red;
+                          font-size: 14px;
+                        }
+                      </style>
+                      <script>
+                        document
+                          .getElementById("id_first_name")
+                          .addEventListener("input", function () {
+                            var saveButton =
+                              document.getElementById("saveButton");
+
+                            document.getElementById(
+                              "first_name_error"
+                            ).innerHTML = "";
+
+                            var firstName = document
+                              .getElementById("id_first_name")
+                              .value.trim();
+
+                            if (firstName === "") {
+                              saveButton.disabled = true;
+                              document.getElementById(
+                                "first_name_error"
+                              ).innerHTML = "! First Name cannot be empty.";
+                              value1 = 1;
+                            } else if (!/^[A-Za-z]+$/.test(firstName)) {
+                              saveButton.disabled = true;
+                              document.getElementById(
+                                "first_name_error"
+                              ).innerHTML =
+                                "! First Name should contain only alphabetic characters.";
+                              value1 = 1;
+                            } else {
+                              saveButton.disabled = false;
+                            }
+                          });
+                      </script>
+                    </div>
+
+                    <div class="input-field">
+                      <label for="{{ form.last_name.id_for_label }}"
+                        >Last Name</label
+                      >
+                      {{ form.last_name }}
+                      <span id="last_name_error" class="error-message"></span>
+                      <style>
+                        .error-message {
+                          color: red;
+                          font-size: 10px;
+                        }
+                      </style>
+                      <script>
+                        document
+                          .getElementById("id_last_name")
+                          .addEventListener("input", function () {
+                            var saveButton =
+                              document.getElementById("saveButton");
+                            // Reset error message
+                            document.getElementById(
+                              "last_name_error"
+                            ).innerHTML = "";
+
+                            // Get the value of the first_name input
+                            var lastName = document
+                              .getElementById("id_last_name")
+                              .value.trim();
+
+                            if (lastName === "") {
+                              saveButton.disabled = true;
+                              document.getElementById(
+                                "last_name_error"
+                              ).innerHTML = "! Last Name cannot be empty.";
+                              value2 = 1;
+                            } else if (!/^[A-Za-z]+$/.test(lastName)) {
+                              saveButton.disabled = true;
+                              document.getElementById(
+                                "last_name_error"
+                              ).innerHTML =
+                                "! last Name should contain only alphabetic characters.";
+                              value2 = 1;
+                              //  value=true
+                            } else {
+                              saveButton.disabled = false;
+                              value2 = 0;
+                              c = c + 1;
+                            }
+
+                            // Add more validation checks as needed
+                          });
+                      </script>
+                    </div>
+
+                    <div class="input-field">
+                      <label
+                        for="{{form.gender.id_for_label}}"
+                        class="form-label"
+                        >Gender</label
+                      >
+                      {{form.gender}}
+                    </div>
+
+                    <div class="input-field">
+                      <label for="{{ form.date_of_birth.id_for_label }}"
+                        >Date of Birth</label
+                      >
+                      {{ form.date_of_birth }}
+                    </div>
+
+                    <div class="input-field">
+                      <label for=" {{ form.nationality.id_for_label }}"
+                        >Nationalty</label
+                      >
+                      {{ form.nationality }}
+                      <span id="nationality_error" class="error-message"></span>
+                      <style>
+                        .error-message {
+                          color: red;
+                          font-size: 14px;
+                        }
+                      </style>
+                      <script>
+                        document
+                          .getElementById("id_nationality")
+                          .addEventListener("input", function () {
+                            var saveButton =
+                              document.getElementById("saveButton");
+                            // Reset error message
+                            document.getElementById(
+                              "nationality_error"
+                            ).innerHTML = "";
+
+                            // Get the value of the first_name input
+                            var nationality = document
+                              .getElementById("id_nationality")
+                              .value.trim();
+
+                            if (nationality === "") {
+                              saveButton.disabled = true;
+                              document.getElementById(
+                                "nationality_error"
+                              ).innerHTML = "! Nationality cannot be empty.";
+                              value3 = 1;
+                            } else if (!/^[A-Za-z]+$/.test(nationality)) {
+                              saveButton.disabled = true;
+                              document.getElementById(
+                                "nationality_error"
+                              ).innerHTML =
+                                "! Nationality should contain only alphabetic characters.";
+                              value3 = 1;
+                            } else {
+                              saveButton.disabled = false;
+                              value3 = 0;
+                              c = c + 1;
+                            }
+
+                            // Add more validation checks as needed
+                          });
+                        // if(c==3)
+                        // {saveButton.disabled=false}
+                        // else
+                        // {saveButton.disabled=true}
+                      </script>
+                    </div>
+
+                    <div class="input-field">
+                      <label for=" {{ form.annual_income.id_for_label }}"
+                        >Annual Income</label
+                      >
+                      {{ form.annual_income }}
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="button-container">
+                <a href="/program_choices" onclick="history.go(-1);" class="backbtn">
+                  <span class="btnText">Back</span>
+                  <i class="uil uil navigator"></i>
+                </a>
+                {% if not is_submitted %}
+    <button id="saveButton" type="submit" href="contact_details" class="nxtbtn">
+        <span class="btnText">Next</span>
+        <i class="uil uil navigator"></i>
+    </button>
+{% else %}
+    <a href="contact_details" class="nxtbtn" >Next</a>
+{% endif %}
+
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../../static/styles/script.js" async defer></script>
+    <script>
+      /*===== SHOW NAVBAR  =====*/ 
+  const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+  const toggle = document.getElementById(toggleId),
+  nav = document.getElementById(navId),
+  bodypd = document.getElementById(bodyId),
+  headerpd = document.getElementById(headerId)
+  
+  // Validate that all variables exist
+  if(toggle && nav && bodypd && headerpd){
+  toggle.addEventListener('click', ()=>{
+      // show navbar
+      nav.classList.toggle('show')
+      // change icon
+      toggle.classList.toggle('bx-x')
+      // add padding to body
+      bodypd.classList.toggle('body-pd')
+      // add padding to header
+      headerpd.classList.toggle('body-pd')
+  })
+  }
+  }
+  
+  showNavbar('header-toggle','nav-bar','body-pd','header')
+  
+  /*===== LINK ACTIVE  =====*/ 
+  const linkColor = document.querySelectorAll('.nav__link')
+  
+  function colorLink(){
+  if(linkColor){
+  linkColor.forEach(l=> l.classList.remove('active'))
+  this.classList.add('active')
+  }
+  }
+  linkColor.forEach(l=> l.addEventListener('click', colorLink))
+    </script>
+    <script>
+      const clockElement = document.getElementById('clock');
+  
+      function updateTime() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        clockElement.textContent = timeString;
+      }
+      
+      setInterval(updateTime, 1000); // Update time every second
+      updateTime(); // Initial update
+      
+  
+  </script><br><br>
+  <footer>
+    <hr class="hr-text">
+    &copy; Copyright © 2024 VJTI Mumbai. All rights reserved.
+  </footer>
+  </body>
+</html>
+
+<!-- Your existing HTML code -->

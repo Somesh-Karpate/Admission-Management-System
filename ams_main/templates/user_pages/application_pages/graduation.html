@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Graduation</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../static/styles/graduation.css" />
+    <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+  </head>
+
+  <body id="body-pd">
+    <header class="header" id="header">
+        <div class="header__toggle">
+            <i class='bx bx-menu' id="header-toggle"></i>
+        </div>
+
+        <div >
+            <a href="/signout" class="logout-link">
+              <button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button>
+            </a>
+        </div>
+        
+    </header>
+
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div class="nav__list">
+              <a  class="nav__link">
+                <i class='bx bx-dots-vertical-rounded nav__icon' ></i>
+                <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"style="color:#FFFFFF;
+                width: 100px;
+                border-radius: 50%;"/>
+            </a>
+                
+            {% if user.is_authenticated %} {% for user_data in all_user_data %}
+           
+              <a  class="nav__link">
+                <i class='bx bx-tag-alt nav__icon' ></i>
+                <h3 class="nav__name">{{ user_data.first_name }} {{ user_data.last_name }}</h3>
+            </a>
+            {% endfor %} {% endif %}
+           
+
+                <div class="nav__list">
+                    <a href="/dashboard" class="nav__link ">
+                    <i class='bx bx-grid-alt nav__icon' ></i>
+                        <span class="nav__name">Dashboard</span>
+                    </a>
+
+                    <a href="/user_profile" class="nav__link ">
+                        <i class='bx bx-user nav__icon' ></i>
+                        <span class="nav__name">My Profile</span>
+                    </a>
+                    
+                    <a href="/application" class="nav__link active">
+                        <i class='bx bxs-file nav__icon' ></i>
+                        <span class="nav__name">Application</span>
+                    </a>
+
+                    <a href="/approval" class="nav__link ">
+                        <i class='bx bx-bookmark nav__icon' ></i>
+                        <span class="nav__name">Approval</span>
+                    </a>
+
+                    <a href="/merit_list" class="nav__link">
+                        <i class='bx bx-folder nav__icon' ></i>
+                        <span class="nav__name">Merit List</span>
+                    </a>
+
+                   
+                </div>
+            </div>
+
+       
+            <a  class="nav__link">
+              <i class='bx bx-timer nav__icon' ></i>
+              <div id="clock"></div>
+          </a>
+              
+        
+        </nav>
+    </div>
+    <br>
+    <div class="container1"> 
+      <h1>Graduation Details</h1>
+      <hr class="hr-text">
+  </div>
+        <!-- START YOUR COE HERE -->
+        <div class="temp">
+          <div class="container">
+  
+            <form method="POST" action="/graduation">
+              {% csrf_token %} {% if form.errors %}
+              <ul class="errorlist">
+                {% for field, errors in form.errors.items %}
+                <li>{{ field }}: {{ errors.0 }}</li>
+                {% endfor %}
+              </ul>
+              {% endif %}
+              <div class="form first">
+                <div class="details personal">
+                  <div class="fields">
+                    <div class="input-field">
+                      <label {{form.bachelor.id_for_label}} class="form-label"
+                        >Graduation Faculty</label
+                      >
+                      {{form.bachelor}}
+                    </div>
+
+                    <div class="input-field">
+                      <label {{ form.uni.id_for_label }}
+                        >Graduation University</label
+                      >
+                      {{form.uni}}
+                      <span id="university_error" class="error-message"></span>
+                      <style>
+                        .error-message {
+                          color: red;
+                          font-size: 14px;
+                        }
+                      </style>
+                      <script>
+                        document.addEventListener(
+                          "DOMContentLoaded",
+                          function () {
+                            var saveButton =
+                              document.getElementById("saveButton");
+
+                            document
+                              .getElementById("id_uni")
+                              .addEventListener("input", function (event) {
+                                document.getElementById(
+                                  "university_error"
+                                ).innerHTML = "";
+
+                                var contactNumber = document
+                                  .getElementById("id_uni")
+                                  .value.trim();
+
+                                if (contactNumber === "") {
+                                  document.getElementById(
+                                    "university_error"
+                                  ).innerHTML = "! this field cannot be empty.";
+                                  saveButton.disabled = true;
+                                  a = 0;
+                                } else if (/\d/.test(contactNumber)) {
+                                  document.getElementById(
+                                    "university_error"
+                                  ).innerHTML =
+                                    "! University should not contain numbers.";
+                                  saveButton.disabled = true; // Disable the button if validation fails
+                                } else if (
+                                  /[@#$%^&*(){};:.<>?/|!~+-]/.test(
+                                    contactNumber
+                                  )
+                                ) {
+                                  document.getElementById(
+                                    "university_error"
+                                  ).innerHTML =
+                                    "! University should not contain special characters.";
+                                  saveButton.disabled = true; // Disable the button if validation fails
+                                } else {
+                                  saveButton.disabled = false;
+                                  a = 1;
+                                }
+                              });
+                          }
+                        );
+                      </script>
+                    </div>
+
+                    <div class="input-field">
+                      <label>Place of Passing/Appearing For Graduation</label>
+                      {{form.place}}
+                    </div>
+                    <div class="input-field">
+                      <label>Graduation Type</label>
+                      {{form.gtype}}
+                    </div>
+
+                    <div class="input-field">
+                      <label>Graduation Passing Year</label>
+                      {{form.p_year}}
+                    </div>
+                    <div class="input-field">
+                      <label>Graduation Status</label>
+                      {{form.gstatus}}
+                    </div>
+
+                    <div class="input-field">
+                      <label>Graduation Marks Type</label>
+                      {{form.g_marks}}
+                    </div>
+                  </div>
+
+                  <div class="fields">
+                    <div class="input-field">
+                      <label>CGPA Marks Obtained</label>
+                      {{form.cgpa_marks}}
+                      <span id="cgpa_marks_error" class="error-message"></span>
+                      <style>
+                        .error-message {
+                          color: red;
+                          font-size: 14px;
+                        }
+                      </style>
+                      <script>
+                        document.addEventListener(
+                          "DOMContentLoaded",
+                          function () {
+                            var saveButton =
+                              document.getElementById("saveButton");
+
+                            document
+                              .getElementById("id_cgpa_marks")
+                              .addEventListener("input", function () {
+                                document.getElementById(
+                                  "cgpa_marks_error"
+                                ).innerHTML = "";
+
+                                var ssc = document
+                                  .getElementById("id_cgpa_marks")
+                                  .value.trim();
+
+                                if (ssc === "") {
+                                  document.getElementById(
+                                    "cgpa_marks_error"
+                                  ).innerHTML =
+                                    "! Marks Obtained cannot be empty.";
+                                  saveButton.disabled = true;
+                                  d = 0;
+                                } else if (ssc < 0 || ssc > 10) {
+                                  document.getElementById(
+                                    "cgpa_marks_error"
+                                  ).innerHTML =
+                                    "! Marks Obtained should be between 0 and 10.";
+                                  saveButton.disabled = true;
+                                } else if (
+                                  /[@#$%^&*(){};:<>?/|!~+-]/.test(ssc)
+                                ) {
+                                  document.getElementById(
+                                    "cgpa_marks_error"
+                                  ).innerHTML =
+                                    "!  Marks should not contain special characters.";
+                                  saveButton.disabled = true; // Disable the button if validation fails
+                                } else {
+                                  saveButton.disabled = false;
+                                }
+                              });
+                          }
+                        );
+                      </script>
+                    </div>
+
+                    <div class="input-field">
+                      <label>CGPA Marks Out of</label>
+                      <input value="10" readonly />
+                    </div>
+
+                    <div class="input-field">
+                      <label>CGPA Marks Percentage</label>
+                      {{form.cgpa_percent}}
+                    </div>
+                  </div>
+                </div><br>
+                <div class="button-container">
+                <a href="/qualification" onclick="history.go(-1);" class="backbtn">
+                  <span class="btnText">Back</span>
+                  <i class="uil uil navigator"></i>
+                </a>
+                <br />
+                {% if not is_submitted%}
+                <button
+                  id="saveButton"
+                  onclick="window.location.href='{% url 'document' %}'"
+                  class="nxtbtn"
+                >
+                  <span class="btnText">Next</span>
+                  <i class="uil uil navigator"></i>
+                </button>
+                {% else %}
+                <a href="document" class="nxtbtn">Next</a>
+                {%endif%}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+<br><br>
+    <script src="../../../static/styles/script.js" async defer></script>
+    <script>
+      /*===== SHOW NAVBAR  =====*/ 
+  const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+  const toggle = document.getElementById(toggleId),
+  nav = document.getElementById(navId),
+  bodypd = document.getElementById(bodyId),
+  headerpd = document.getElementById(headerId)
+  
+  // Validate that all variables exist
+  if(toggle && nav && bodypd && headerpd){
+  toggle.addEventListener('click', ()=>{
+      // show navbar
+      nav.classList.toggle('show')
+      // change icon
+      toggle.classList.toggle('bx-x')
+      // add padding to body
+      bodypd.classList.toggle('body-pd')
+      // add padding to header
+      headerpd.classList.toggle('body-pd')
+  })
+  }
+  }
+  
+  showNavbar('header-toggle','nav-bar','body-pd','header')
+  
+  /*===== LINK ACTIVE  =====*/ 
+  const linkColor = document.querySelectorAll('.nav__link')
+  
+  function colorLink(){
+  if(linkColor){
+  linkColor.forEach(l=> l.classList.remove('active'))
+  this.classList.add('active')
+  }
+  }
+  linkColor.forEach(l=> l.addEventListener('click', colorLink))
+    </script>
+    <script>
+      const clockElement = document.getElementById('clock');
+  
+      function updateTime() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        clockElement.textContent = timeString;
+      }
+      
+      setInterval(updateTime, 1000); // Update time every second
+      updateTime(); // Initial update
+      
+  
+  </script>
+  <footer>
+    <hr class="hr-text">
+    &copy; Copyright © 2024 VJTI Mumbai. All rights reserved.
+  </footer>
+  </body>
+</html>

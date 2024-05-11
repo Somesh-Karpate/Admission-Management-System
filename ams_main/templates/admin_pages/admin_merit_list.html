@@ -1,0 +1,125 @@
+<!-- merit_list.html -->
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Merit List</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'styles/admin_merit_list.css' %}" />
+</head>
+<body>
+    <div class="main-body">
+    <div class="sidebar">
+        <div class="sidebar-elements">
+          <div class="student-details">
+            <img
+              src="../../static/resources/default-user-icon-8.jpg"
+              alt="user-image"
+            />
+            {% if user.is_authenticated %}
+            <h3>{{user.first_name}} {{user.last_name}}</h3>
+            {% endif %}
+          </div>
+          <div class="sidebar-buttons">
+            <div class="route-buttons">
+              <a href="/a_dashboard" class="button">
+                <i class="bx bxs-widget"></i>
+                <p>Dashboard</p>
+              </a>
+              {% comment %}
+              <a href="#" class="button">
+                <i class="bx bxs-file"></i>
+                <p>Application</p>
+              </a>
+              {% endcomment %}
+              <a href="/course_data" class="button">
+                <i class="bx bx-folder"></i>
+                <p>Course Data</p>
+              </a>
+              <a href="/admin_merit_list" class="button">
+                <i class="bx bx-user"></i>
+                <p>Merit List</p>
+              </a>
+            </div>
+          </div>
+          <div class="logout-buttons">
+            <a href="/signout" class="button">
+              <i class="bx bx-log-out-circle"></i>
+              <p type="submit">Logout</p>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="dashboard">
+        <div class="application-layer">
+          <div class="application-details">
+            <h1>Merit List</h1>
+    <form method="POST" action="{% url 'admin_merit_list' %}" id="branchForm">
+        {% csrf_token %}
+        <label for="branch">Select Branch:</label>
+        <select id="branch" name="branch">
+            <option value="all" {% if selected_branch == 'all' %}selected{% endif %}>All Branches</option>
+            <option value="MCA_60" {% if selected_branch == 'MCA_60' %}selected{% endif %}>MCA</option>
+            <option value="MTECH_2" {% if selected_branch == 'MTECH_2' %}selected{% endif %}>MTECH</option>
+            <!-- Add more options for other branches as needed -->
+        </select>
+        <label for="round">Select Round:</label>
+        <select id="round" name="round">
+            <option value="1" {% if round_num == '1' %}selected{% endif %}>Round 1</option>
+            <option value="2" {% if round_num == '2' %}selected{% endif %}>Round 2</option>
+        </select>
+        <input type="submit" value="Filter">
+    </form>
+    {% if selected_branch %}    
+        <table>
+            <h2>Merit List - {{ selected_branch }}</h2>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>CET Score</th>
+                    <th>12th Marks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in student_details %}
+                    {% if selected_branch == "all" or selected_branch == student.branch %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ student.first_name }}</td>
+                            <td>{{ student.mahcet_score }}</td>
+                            <td>{{ student.hsc_percent }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% if selected_branch != "all" and student_details%}
+            <form action="/a_dashboard" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="selected_branch" value="{{ selected_branch }}">
+                <input type="hidden" name="round_num" value="{{ round_num }}">
+                <button type="submit" class="publish-button">Publish Merit List</button>
+            </form>
+        {% endif %}
+    {% endif %}
+          </div>
+        </div>
+      </div>
+    <div>
+</body>
+</html>

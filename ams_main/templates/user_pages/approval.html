@@ -1,0 +1,196 @@
+<!-- approval_page.html -->
+<!DOCTYPE html>
+{% load static%}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Approval Page</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    
+    <link rel="stylesheet" href="{% static 'styles/approval.css' %}" />
+    <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+  </head>
+  <body id="body-pd">
+    <header class="header" id="header">
+        <div class="header__toggle">
+            <i class='bx bx-menu' id="header-toggle"></i>
+        </div>
+
+        <div >
+            <a href="/signout" class="logout-link">
+              <button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button>
+            </a>
+        </div>
+        
+    </header>
+
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div class="nav__list">
+              <a  class="nav__link">
+                <i class='bx bx-dots-vertical-rounded nav__icon' ></i>
+                <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"style="color:#FFFFFF;
+                width: 100px;
+                border-radius: 50%;"/>
+            </a>
+                
+            {% if user.is_authenticated %} {% for user_data in all_user_data %}
+           
+              <a  class="nav__link">
+                <i class='bx bx-tag-alt nav__icon' ></i>
+                <h3 class="nav__name">{{ user_data.first_name }} {{ user_data.last_name }}</h3>
+            </a>
+            {% endfor %} {% endif %}
+           
+
+                <div class="nav__list">
+                    <a href="/dashboard" class="nav__link ">
+                    <i class='bx bx-grid-alt nav__icon' ></i>
+                        <span class="nav__name">Dashboard</span>
+                    </a>
+
+                    <a href="/user_profile" class="nav__link ">
+                        <i class='bx bx-user nav__icon' ></i>
+                        <span class="nav__name">My Profile</span>
+                    </a>
+                    
+                    <a href="/application" class="nav__link">
+                        <i class='bx bxs-file nav__icon' ></i>
+                        <span class="nav__name">Application</span>
+                    </a>
+
+                    <a href="/approval" class="nav__link active">
+                        <i class='bx bx-bookmark nav__icon' ></i>
+                        <span class="nav__name">Approval</span>
+                    </a>
+
+                    <a href="/merit_list" class="nav__link">
+                        <i class='bx bx-folder nav__icon' ></i>
+                        <span class="nav__name">Merit List</span>
+                    </a>
+
+                   
+                </div>
+            </div>
+
+       
+            <a  class="nav__link">
+              <i class='bx bx-timer nav__icon' ></i>
+              <div id="clock"></div>
+          </a>
+              
+        
+        </nav>
+    </div>
+    <br>
+    <div class="container1"> 
+      <h1>Application Approval</h1>
+      <hr class="hr-text">
+  </div>
+    <div class="content">
+    <div class="container">
+    <div class="table-container">
+    <table border="0">
+      <thead>
+        <tr>
+          <th>Version</th>
+          <th>Application No.</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Action</th>
+          <th>Remark</th>
+          <th>Seat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Version 01</td>
+          <td>{{all_user_data.0.user_id}}</td>
+          <td> {{ all_user_data.0.first_name }}</td>
+          <td> {{ all_user_data.0.last_name }}</td>
+          <td> {{ all_user_data.0.email }}</td>
+          <td>{% if all_user_data.0.is_accepted == 'accept' %}Approved{% elif all_user_data.0.is_accepted == 'reject' %}Rejected{% else %}Pending{% endif %}</td>
+          <td>{{all_user_data.0.remark}}</td> 
+          <td>{% if all_user_data.0.seat_is_accepted == True%}Seat Accepted{% elif all_user_data.0.is_declined == True%}Seat Declined {% else %}{%endif%}</td>
+            <!-- Add your button or link here -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+</div>
+</div>
+  </div>
+  <script>
+    /*===== SHOW NAVBAR  =====*/ 
+const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+const toggle = document.getElementById(toggleId),
+nav = document.getElementById(navId),
+bodypd = document.getElementById(bodyId),
+headerpd = document.getElementById(headerId)
+
+// Validate that all variables exist
+if(toggle && nav && bodypd && headerpd){
+toggle.addEventListener('click', ()=>{
+    // show navbar
+    nav.classList.toggle('show')
+    // change icon
+    toggle.classList.toggle('bx-x')
+    // add padding to body
+    bodypd.classList.toggle('body-pd')
+    // add padding to header
+    headerpd.classList.toggle('body-pd')
+})
+}
+}
+
+showNavbar('header-toggle','nav-bar','body-pd','header')
+
+/*===== LINK ACTIVE  =====*/ 
+const linkColor = document.querySelectorAll('.nav__link')
+
+function colorLink(){
+if(linkColor){
+linkColor.forEach(l=> l.classList.remove('active'))
+this.classList.add('active')
+}
+}
+linkColor.forEach(l=> l.addEventListener('click', colorLink))
+  </script>
+  <script>
+    const clockElement = document.getElementById('clock');
+
+    function updateTime() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+      const timeString = `${hours}:${minutes}:${seconds}`;
+      clockElement.textContent = timeString;
+    }
+    
+    setInterval(updateTime, 1000); // Update time every second
+    updateTime(); // Initial update
+    
+
+</script>
+<footer>
+  <hr class="hr-text">
+  &copy; Copyright © 2024 VJTI Mumbai. All rights reserved.
+</footer>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  {%load static%}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS</title>
+  <link rel="stylesheet" href="{% static 'styles/index.css' %}" />
+  <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+</head>
+<body>
+  <nav>
+    <nav class="navbar">
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-icon">
+          <span class="line"></span>
+          <span class="line"></span>
+          <span class="line"></span>
+      </label>
+      
+
+      <div class="nav-links">
+      <a href="#" class="nav-link">Home</a>
+      <a href="/about" class="nav-link">About Us</a>
+      <a href="/signin" class="nav-link">Login</a>
+      <a href="/signup" class="nav-link">Signup</a>
+    </div>
+    </nav>
+  </nav>
+  
+  <div class="ams">
+    <div class="left">
+      <h1><br>Veermata Jijabai<br> Technological<br>Institute-VJTI</h1>
+      <p><br>Streamline your admissions process with our intuitive and efficient platform. Whether you're a school, college, or any educational institution, our system is designed to simplify the entire admission journey, from application submission to enrollment.</p>
+    </div>
+    
+    <div class="right">
+      <img src="{% static 'resources/vjti-logo.png' %}" alt="VJTI Logo">
+    </div>
+  </div>
+
+
+  <script src="" async defer></script>
+  <script>const navToggle = document.getElementById('nav-toggle');
+    const navIcon = document.querySelector('.nav-icon');
+    const navLinks = document.querySelector('.nav-links');
+    
+    navIcon.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+    });
+    
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            navLinks.classList.remove('active');
+        }
+    });
+    </script>
+</body>
+</html>

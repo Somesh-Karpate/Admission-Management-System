@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'styles/signup.css'%}" />
+    <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+    <title>Login</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container-main">
+        <div class="row">
+          <div class="side-image">
+            <!--------Image-------->
+         
+          </div>
+          <div class="right">
+            <form action="/signup" method="post" class="input-box">
+              {% csrf_token %}
+              <header>Create Account</header>
+              <label for="fname">First Name</label>
+              <div class="input-field">
+                <input
+                  type="text"
+                  class="input"
+                  id="fname"
+                  name="fname"
+                  required
+                  autocomplete="off"
+                />
+                
+              </div>
+              <div class="input-field">
+                <label for="lname">Last Name</label>
+                <input
+                  type="text"
+                  class="input"
+                  id="lname"
+                  name="lname"
+                  required
+                  autocomplete="off"
+                />
+              </div>
+              <div class="input-field">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  class="input"
+                  id="email"
+                  name="email"
+                  required
+                  autocomplete="off"
+                />
+              </div>
+              <div class="input-field">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="input"
+                  id="password"
+                  name="password"
+                  required
+                />
+              </div>
+              <div class="input-field">
+                <label for="confirm_password">Confirm Password</label>
+                <input
+                  type="password"
+                  class="input"
+                  id="confirm_password"
+                  name="confirm_password"
+                  required
+                />
+              </div>
+              <div class="input-field">
+                <input type="submit" class="submit" value="Sign Up" />
+              </div>
+              <div class="signin">
+                <span
+                  >Already have an Account?
+                  <a href="signin">Login Here</a></span
+                >
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+{%load static%}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>template</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../static/styles/address_details.css" />
+    <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+  </head>
+
+  <body id="body-pd">
+    <header class="header" id="header">
+        <div class="header__toggle">
+            <i class='bx bx-menu' id="header-toggle"></i>
+        </div>
+
+        <div >
+            <a href="/signout" class="logout-link">
+              <button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button>
+            </a>
+        </div>
+        
+    </header>
+
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div class="nav__list">
+              <a  class="nav__link">
+                <i class='bx bx-dots-vertical-rounded nav__icon' ></i>
+                <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"style="color:#FFFFFF;
+                width: 100px;
+                border-radius: 50%;"/>
+            </a>
+                
+            {% if user.is_authenticated %} {% for user_data in all_user_data %}
+           
+              <a  class="nav__link">
+                <i class='bx bx-tag-alt nav__icon' ></i>
+                <h3 class="nav__name">{{ user_data.first_name }} {{ user_data.last_name }}</h3>
+            </a>
+            {% endfor %} {% endif %}
+           
+
+                <div class="nav__list">
+                    <a href="/dashboard" class="nav__link ">
+                    <i class='bx bx-grid-alt nav__icon' ></i>
+                        <span class="nav__name">Dashboard</span>
+                    </a>
+
+                    <a href="/user_profile" class="nav__link ">
+                        <i class='bx bx-user nav__icon' ></i>
+                        <span class="nav__name">My Profile</span>
+                    </a>
+                    
+                    <a href="/application" class="nav__link active">
+                        <i class='bx bxs-file nav__icon' ></i>
+                        <span class="nav__name">Application</span>
+                    </a>
+
+                    <a href="/approval" class="nav__link ">
+                        <i class='bx bx-bookmark nav__icon' ></i>
+                        <span class="nav__name">Approval</span>
+                    </a>
+
+                    <a href="/merit_list" class="nav__link">
+                        <i class='bx bx-folder nav__icon' ></i>
+                        <span class="nav__name">Merit List</span>
+                    </a>
+
+                   
+                </div>
+            </div>
+
+       
+            <a  class="nav__link">
+              <i class='bx bx-timer nav__icon' ></i>
+              <div id="clock"></div>
+          </a>
+              
+        
+        </nav>
+    </div>
+    <br>
+    <div class="container1"> 
+      <h1>Address Details</h1>
+      <hr class="hr-text">
+  </div>
+        <!-- START YOUR COE HERE -->
+        <div class="temp">
+          <div class="container">
+            <form method="POST" action="/address">
+              {%csrf_token%}
+              <div class="form first">
+                <div class="details personal">
+                  <div class="fields">
+                    <div class="input-field">
+                      <label {{ form.address_line1.id_for_label}}
+                        >Address line 1</label
+                      >
+                      {{form.address_line1}} {% comment %}
+                      <input
+                        type="text"
+                        placeholder="Enter your address"
+                        id="Address1"
+                        required
+                      />
+                      {% endcomment %}
+                    </div>
+
+                    <div class="input-field">
+                      <label {{ form.address_line2.id_for_label}}
+                        >Address Line 2</label
+                      >
+                      {{form.address_line2}} {% comment %}
+                      <input
+                        type="text"
+                        placeholder="Enter your address"
+                        id="Address2"
+                        required
+                      />
+                      {% endcomment %}
+                    </div>
+
+                    <div class="input-field">
+                      <label {{ form.landmark.id_for_label}}>Landmark</label>
+                      {{form.landmark}} {% comment %}
+                      <input
+                        type="text"
+                        placeholder="Enter your landmark"
+                        id="Landmark"
+                        required
+                      />
+                      {% endcomment %}
+                    </div>
+
+
+
+
+
+                    <div class="input-field">
+                      <label {{form.town_city.id_for_label}}>Town/City</label>
+                      {{form.town_city}} 
+                      <span id="town_city_error" class="error-message"></span>
+                      <style>
+                        .error-message {
+                            color: red;
+                            font-size: 14px;
+                        }
+                    </style>
+                    <script>
+                      document.addEventListener("DOMContentLoaded", function () {
+                          var saveButton = document.getElementById("saveButton"); 
+                  
+                          document.getElementById("id_town_city").addEventListener("input", function (event) {
+                            
+                              document.getElementById("town_city_error").innerHTML = "";
+                  
+                              var contactNumber = document.getElementById("id_town_city").value.trim();
+                  
+                              if (contactNumber === "") {
+                                  document.getElementById("town_city_error").innerHTML = "! City cannot be empty.";
+                                  saveButton.disabled = true;
+                                  a=0;  
+                              }
+                              else if (/\d/.test(contactNumber)) 
+                              {
+                                  document.getElementById("town_city_error").innerHTML = "! City should not contain numbers.";
+                                  saveButton.disabled = true;  // Disable the button if validation fails
+                                } 
+                              else if (/[@#$%^&*(){};:.<>?/|!~+-]/.test(contactNumber)) 
+                              {
+                                  document.getElementById("town_city_error").innerHTML = "! city should not contain special characters.";
+                                   saveButton.disabled = true;  // Disable the button if validation fails
+                              }
+                              else {
+                                  saveButton.disabled = false; 
+                                  a=1;
+                              }
+                  
+                  
+                          });
+                  
+            
+                      });
+                  </script>  
+                    </div>
+
+
+                    
+                    <div class="input-field">
+                      <label {{form.pincode.id_for_label}}>Pincode</label>
+                      {{form.pincode}} 
+                      <!-- <input
+                        type="number"
+                        placeholder="Enter your pincode"
+                        id="Pincode"
+                        required
+                      /> -->
+                      <span id="pincode_error" class="error-message"></span>
+                      <style>
+                        .error-message {
+                            color: red;
+                            font-size: 14px;
+                        }
+                    </style>
+                    <script>
+                      document.addEventListener("DOMContentLoaded", function () {
+                          var saveButton = document.getElementById("saveButton"); 
+                  
+                          document.getElementById("id_pincode").addEventListener("input", function (event) {
+                        
+                              document.getElementById("pincode_error").innerHTML = "";
+                  
+                              var contactNumber = document.getElementById("id_pincode").value.trim();
+                  
+                              if (contactNumber === "") {
+                                  document.getElementById("pincode_error").innerHTML = "! PINCODE cannot be empty.";
+                                  saveButton.disabled = true;
+                                  a=0;  
+                              }
+                              else if (/[a-zA-Z]/.test(contactNumber)) {
+                                  document.getElementById("pincode_error").innerHTML = "! PINCODE should not contain alphabets.";
+                                  saveButton.disabled = true;  
+                            } 
+                            else if (/[@#$%^&*(){};:.<>?/|!~+-]/.test(contactNumber)) 
+                              {
+                                  document.getElementById("pincode_error").innerHTML = " ! PINCODE should not contain special characters.";
+                                   saveButton.disabled = true;  // Disable the button if validation fails
+                              }
+                              else if (!/^\d{6}$/.test(contactNumber)) {
+                                  document.getElementById("pincode_error").innerHTML = "! PINCODE should be exactly 6 digits.";
+                                  saveButton.disabled = true;  
+                                  a=0;
+                              }
+                              
+                              else {
+                                  saveButton.disabled = false; 
+                                  a=1;
+                              }
+                  
+                  
+                          });
+                  
+            
+                      });
+                  </script>  
+                    </div>
+
+
+
+                    <div class="input-field">
+                      <label {{form.district.id_for_label}}>District</label>
+                      {{form.district}} 
+                      <span id="district_error" class="error-message"></span>
+                      <style>
+                        .error-message {
+                            color: red;
+                            font-size: 14px;
+                        }
+                    </style>
+                    <script>
+                      document.addEventListener("DOMContentLoaded", function () {
+                          var saveButton = document.getElementById("saveButton"); 
+                  
+                          document.getElementById("id_district").addEventListener("input", function (event) {
+                        
+                              document.getElementById("district_error").innerHTML = "";
+                  
+                              var contactNumber = document.getElementById("id_district").value.trim();
+                  
+                              if (contactNumber === "") {
+                                  document.getElementById("district_error").innerHTML = "! District cannot be empty.";
+                                  saveButton.disabled = true;
+                                  a=0;  
+                              }
+                              else if (/\d/.test(contactNumber)) 
+                              {
+                                  document.getElementById("district_error").innerHTML = "! District should not contain numbers.";
+                                  saveButton.disabled = true;  // Disable the button if validation fails
+                                } 
+                                else if (/[@#$%^&*(){};:.<>?/|!~+-]/.test(contactNumber)) 
+                              {
+                                  document.getElementById("district_error").innerHTML = "! District should not contain special characters.";
+                                   saveButton.disabled = true;  // Disable the button if validation fails
+                              }        
+                              else {
+                                  saveButton.disabled = false; 
+                                  a=1;
+                              }
+                  
+                  
+                          });
+                  
+            
+                      });
+                  </script>  
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="input-field">
+                      <label {{form.state.id_for_label}}>State</label>
+                      {{form.state}} 
+                      <span id="state_error" class="error-message"></span>
+                      <style>
+                        .error-message {
+                            color: red;
+                            font-size: 14px;
+                        }
+                    </style>
+                    <script>
+                      document.addEventListener("DOMContentLoaded", function () {
+                          var saveButton = document.getElementById("saveButton"); 
+                  
+                          document.getElementById("id_state").addEventListener("input", function (event) {
+                            
+                              document.getElementById("state_error").innerHTML = "";
+                  
+                              var contactNumber = document.getElementById("id_state").value.trim();
+                  
+                              if (contactNumber === "") {
+                                  document.getElementById("state_error").innerHTML = "! State cannot be empty.";
+                                  saveButton.disabled = true;
+                                  a=0;  
+                              }
+                              else if (/\d/.test(contactNumber)) 
+                              {
+                                  document.getElementById("state_error").innerHTML = "! State should not contain numbers.";
+                                  saveButton.disabled = true;  // Disable the button if validation fails
+                                } 
+                                else if (/[@#$%^&*(){};:.<>?/|!~+-]/.test(contactNumber)) 
+                              {
+                                  document.getElementById("state_error").innerHTML = "! State should not contain special characters.";
+                                   saveButton.disabled = true;  // Disable the button if validation fails
+                              }           
+                              else {
+                                  saveButton.disabled = false; 
+                                  a=1;
+                              }
+                  
+                  
+                          });
+                  
+            
+                      });
+                  </script>  
+                    </div>
+
+
+
+
+
+
+
+                    <div class="input-field">
+                      <label {{form.permanent_address.id_for_label}}
+                        >Permant Address same as Current Address</label
+                      >
+                      {{form.permanent_address}} {% comment %}
+                      <input
+                        type="checkbox"
+                        id="check"
+                        label="address"
+                        required
+                      />
+                      {% endcomment %}
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="button-container">
+                <a href="/contact_details" onclick="history.go(-1);" class="backbtn">
+                  <span class="btnText">Back</span>
+                  <i class="uil uil navigator"></i>
+                </a>
+
+                <br />
+                {% if not is_submitted %}
+                <button class="nxtbtn" id="saveButton">
+                  <span class="btnText">Next</span>
+                  <i class="uil uil navigator"></i>
+                </button>
+                {% else %}
+                <a href="qualification" class="nxtbtn">Next</a>
+                {%endif%}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../../static/styles/script.js" async defer></script>
+    <script>
+      /*===== SHOW NAVBAR  =====*/ 
+  const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+  const toggle = document.getElementById(toggleId),
+  nav = document.getElementById(navId),
+  bodypd = document.getElementById(bodyId),
+  headerpd = document.getElementById(headerId)
+  
+  // Validate that all variables exist
+  if(toggle && nav && bodypd && headerpd){
+  toggle.addEventListener('click', ()=>{
+      // show navbar
+      nav.classList.toggle('show')
+      // change icon
+      toggle.classList.toggle('bx-x')
+      // add padding to body
+      bodypd.classList.toggle('body-pd')
+      // add padding to header
+      headerpd.classList.toggle('body-pd')
+  })
+  }
+  }
+  
+  showNavbar('header-toggle','nav-bar','body-pd','header')
+  
+  /*===== LINK ACTIVE  =====*/ 
+  const linkColor = document.querySelectorAll('.nav__link')
+  
+  function colorLink(){
+  if(linkColor){
+  linkColor.forEach(l=> l.classList.remove('active'))
+  this.classList.add('active')
+  }
+  }
+  linkColor.forEach(l=> l.addEventListener('click', colorLink))
+    </script>
+    <script>
+      const clockElement = document.getElementById('clock');
+  
+      function updateTime() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        clockElement.textContent = timeString;
+      }
+      
+      setInterval(updateTime, 1000); // Update time every second
+      updateTime(); // Initial update
+      
+  
+  </script>
+  <footer>
+    <hr class="hr-text">
+    &copy; Copyright © 2024 VJTI Mumbai. All rights reserved.
+  </footer>
+  </body>
+</html>

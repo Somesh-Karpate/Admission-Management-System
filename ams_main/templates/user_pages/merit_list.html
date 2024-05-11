@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+{% load static%}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Merit List</title>
+    <link rel="stylesheet" href="{% static 'styles/merit_list.css' %}">
+    <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+  </head>
+  <body id="body-pd">
+    
+    
+    <header class="header" id="header">
+      <div class="header__toggle">
+          <i class='bx bx-menu' id="header-toggle"></i>
+      </div>
+
+      <div >
+          <a href="/signout" class="logout-link">
+            <button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button>
+          </a>
+      </div>
+      
+  </header>
+
+  <div class="l-navbar" id="nav-bar">
+      <nav class="nav">
+          <div class="nav__list">
+            <a  class="nav__link">
+              <i class='bx bx-dots-vertical-rounded nav__icon' ></i>
+              <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"style="color:#FFFFFF;
+              width: 100px;
+              border-radius: 50%;"/>
+          </a>
+              
+           
+          {% if user.is_authenticated %} {% for user_data in all_user_data %}
+           
+              <a  class="nav__link">
+                <i class='bx bx-tag-alt nav__icon' ></i>
+                <h3 class="nav__name">{{ user_data.first_name }} {{ user_data.last_name }}</h3>
+            </a>
+            {% endfor %} {% endif %}
+
+              <div class="nav__list">
+                  <a href="/dashboard" class="nav__link">
+                  <i class='bx bx-grid-alt nav__icon' ></i>
+                      <span class="nav__name">Dashboard</span>
+                  </a>
+
+                  <a href="/user_profile" class="nav__link">
+                      <i class='bx bx-user nav__icon' ></i>
+                      <span class="nav__name">My Profile</span>
+                  </a>
+                  
+                  <a href="/application" class="nav__link ">
+                      <i class='bx bxs-file nav__icon' ></i>
+                      <span class="nav__name">Application</span>
+                  </a>
+
+                  <a href="/approval" class="nav__link">
+                      <i class='bx bx-bookmark nav__icon' ></i>
+                      <span class="nav__name">Approval</span>
+                  </a>
+
+                  <a href="/merit_list" class="nav__link active">
+                      <i class='bx bx-folder nav__icon' ></i>
+                      <span class="nav__name">Merit List</span>
+                  </a>
+
+                 
+              </div>
+          </div>
+
+     
+          <a  class="nav__link">
+            <i class='bx bx-timer nav__icon' ></i>
+            <div id="clock"></div>
+        </a>
+            
+      
+      </nav>
+  </div>
+  <h1>Merit List</h1>
+  <h3 id="countdown"></h3>
+    <hr class="hr-text">
+<div class="container_2"><center>
+<h3>VEERMATA JIJABAI TECHNOLOGICAL INSTITUTE</h3>
+<p>Welcome to the Merit List page! This is where we recognize academic excellence and hard work. Congratulations to all those who have made it onto this list. Your achievements speak volumes about your dedication and capabilities. We're proud to have you as part of our academic community.</p>
+</center>
+<div class="search-bar">
+  <form action="/search_student" method="GET">
+    <input type="text" name="query" placeholder="Search by name or ID" />
+    <button type="submit">Search</button>
+  </form>
+</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>CET Score</th>
+          <th>12th Marks</th>
+          <th>Branch</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <h2> Round {{context.0.admin_selected_round}}</h2>
+        {% for student in context %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ student.first_name }}</td>
+          <td>{{ student.mahcet_score }}</td>
+          <td>{{ student.hsc_percent }}</td>
+          <td>{{ student.branch }}</td>
+          <td>
+            {% if student.user == request.user %}
+            <form method="post" action="/accept_decline_seat">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="accept" />
+              <input type="hidden" name="round" value="{{ selected_round }}" /> <!-- Add round number as hidden input -->
+              <button type="submit">Accept</button>
+            </form>
+            <form method="post" action="/accept_decline_seat">
+              {%csrf_token%}
+              <input type="hidden" name="action" value="decline" />
+              <input type="hidden" name="round" value="{{ selected_round }}" /> <!-- Add round number as hidden input -->
+              <button type="submit">Decline</button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+    <br>
+    <br>
+    <br>
+    <table>
+      <h2>Seat Alloted/Seat Accepted</h2>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>CET Score</th>
+          <th>12th Marks</th>
+          <th>Branch</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in all_students_seat_is_accepted %}
+        {% if student.seat_is_accepted %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ student.first_name }}</td>
+          <td>{{ student.mahcet_score }}</td>
+          <td>{{ student.hsc_percent }}</td>
+          <td>{{ student.branch }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+    <footer>
+      <hr class="hr-text">
+      &copy; Copyright © 2024 VJTI Mumbai. All rights reserved.
+    </footer>
+    <script>
+      // Get the current date and time
+const currentDate = new Date();
+const dateElement = document.getElementById('current-date');
+const timeElement = document.getElementById('current-time');
+
+// Format the date and time
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const formattedDate = currentDate.toLocaleDateString('en-US', options);
+const formattedTime = currentDate.toLocaleTimeString('en-US');
+
+// Update the content of the elements
+dateElement.textContent =  formattedDate;
+timeElement.textContent = formattedTime;
+
+
+  </script>
+  <script>
+    // Function to start the countdown
+    function startCountdown(endDateTime) {
+        var countdownElement = document.getElementById('countdown');
+
+        if (seatIsAccepted) {
+          // If seat is accepted, hide the countdown and return
+          countdownElement.style.display = 'none';
+          return;
+      }
+
+        // Update the countdown every second
+        var countdownInterval = setInterval(function () {
+            var now = new Date().getTime();
+            var distance = endDateTime - now;
+
+            // Calculate remaining time
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the countdown
+            countdownElement.innerHTML = "Time left to accept seat: " + minutes + "m " + seconds + "s ";
+
+            // If the countdown is over, clear the interval and display EXPIRED
+            if (distance <= 0) {
+                clearInterval(countdownInterval);
+                countdownElement.innerHTML = "EXPIRED";
+                // Make AJAX request to set is_declined to True
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/accept_decline_seat", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        console.log("is_declined updated successfully");
+                    }
+                };
+                var data = JSON.stringify({ action: 'decline' }); // Set the action parameter
+                console.log(data);
+                xhr.send(data);// Send action as decline
+            }
+        }, 1000);
+    }
+
+     // Function to check if the seat is accepted for this user
+     var seatIsAccepted = "{{ seat_is_accepted }}" === "True" && {{ user_id }} == {{ request.user.id }};
+
+    
+  
+    // Function to get the end time of the countdown from cookies
+    function getEndTimeFromCookie() {
+        var name = "countdownEndTime=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var cookieArray = decodedCookie.split(';');
+        for (var i = 0; i < cookieArray.length; i++) {
+            var cookie = cookieArray[i];
+            while (cookie.charAt(0) == ' ') {
+                cookie = cookie.substring(1);
+            }
+            if (cookie.indexOf(name) == 0) {
+                return parseInt(cookie.substring(name.length, cookie.length));
+            }
+        }
+        return null;
+    }
+
+    // Function to set the end time of the countdown in cookies
+    function setEndTimeInCookie(endDateTime) {
+        var d = new Date();
+        d.setTime(endDateTime);
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = "countdownEndTime=" + endDateTime + ";" + expires + ";path=/";
+    }
+
+    // Call startCountdown function with the end date and time
+    window.onload = function () {
+        var storedEndTime = getEndTimeFromCookie();
+        var isOnMeritList = "{{ is_on_merit_list }}"; // Assuming you have a variable indicating whether the user's name is on the merit list
+        if (isOnMeritList === "True") {
+            if (storedEndTime !== null) {
+                startCountdown(storedEndTime);
+            } else {
+                var endDateTime = new Date().getTime() + (2 * 60 * 1000); // Set end time to 5 minutes from current time
+                startCountdown(endDateTime);
+                setEndTimeInCookie(endDateTime);
+            }
+        }
+    };
+</script>
+
+<script>
+  /*===== SHOW NAVBAR  =====*/ 
+const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+const toggle = document.getElementById(toggleId),
+nav = document.getElementById(navId),
+bodypd = document.getElementById(bodyId),
+headerpd = document.getElementById(headerId)
+
+// Validate that all variables exist
+if(toggle && nav && bodypd && headerpd){
+toggle.addEventListener('click', ()=>{
+  // show navbar
+  nav.classList.toggle('show')
+  // change icon
+  toggle.classList.toggle('bx-x')
+  // add padding to body
+  bodypd.classList.toggle('body-pd')
+  // add padding to header
+  headerpd.classList.toggle('body-pd')
+})
+}
+}
+
+showNavbar('header-toggle','nav-bar','body-pd','header')
+
+/*===== LINK ACTIVE  =====*/ 
+const linkColor = document.querySelectorAll('.nav__link')
+
+function colorLink(){
+if(linkColor){
+linkColor.forEach(l=> l.classList.remove('active'))
+this.classList.add('active')
+}
+}
+linkColor.forEach(l=> l.addEventListener('click', colorLink))
+</script>
+<script>
+  const clockElement = document.getElementById('clock');
+
+  function updateTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const seconds = now.getSeconds().toString().padStart(2, '0');
+    const timeString = `${hours}:${minutes}:${seconds}`;
+    clockElement.textContent = timeString;
+  }
+  
+  setInterval(updateTime, 1000); // Update time every second
+  updateTime(); // Initial update
+  
+
+</script>
+  </body>
+</html>

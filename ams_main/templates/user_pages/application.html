@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Application - AMS [VJTI]</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'styles/application.css' %}" />
+    <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+  </head>
+
+  <body id="body-pd">
+    <header class="header" id="header">
+        <div class="header__toggle">
+            <i class='bx bx-menu' id="header-toggle"></i>
+        </div>
+
+        <div >
+            <a href="/signout" class="logout-link">
+              <button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button>
+            </a>
+        </div>
+        
+    </header>
+
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div class="nav__list">
+              <a  class="nav__link">
+                <i class='bx bx-dots-vertical-rounded nav__icon' ></i>
+                <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"style="color:#FFFFFF;
+                width: 100px;
+                border-radius: 50%;"/>
+            </a>
+                
+            {% if user.is_authenticated %} {% for user_data in all_user_data %}
+           
+              <a  class="nav__link">
+                <i class='bx bx-tag-alt nav__icon' ></i>
+                <h3 class="nav__name">{{ user_data.first_name }} {{ user_data.last_name }}</h3>
+            </a>
+            {% endfor %} {% endif %}
+           
+
+                <div class="nav__list">
+                    <a href="/dashboard" class="nav__link ">
+                    <i class='bx bx-grid-alt nav__icon' ></i>
+                        <span class="nav__name">Dashboard</span>
+                    </a>
+
+                    <a href="/user_profile" class="nav__link ">
+                        <i class='bx bx-user nav__icon' ></i>
+                        <span class="nav__name">My Profile</span>
+                    </a>
+                    
+                    <a href="/application" class="nav__link active">
+                        <i class='bx bxs-file nav__icon' ></i>
+                        <span class="nav__name">Application</span>
+                    </a>
+
+                    <a href="/approval" class="nav__link ">
+                        <i class='bx bx-bookmark nav__icon' ></i>
+                        <span class="nav__name">Approval</span>
+                    </a>
+
+                    <a href="/merit_list" class="nav__link">
+                        <i class='bx bx-folder nav__icon' ></i>
+                        <span class="nav__name">Merit List</span>
+                    </a>
+
+                   
+                </div>
+            </div>
+
+       
+            <a  class="nav__link">
+              <i class='bx bx-timer nav__icon' ></i>
+              <div id="clock"></div>
+          </a>
+              
+        
+        </nav>
+    </div>
+    <br>
+    <div class="container1"> 
+      <h1>Application </h1>
+      <hr class="hr-text">
+  </div>
+      
+      {% comment %} <div class="application"> {% endcomment %}
+        <div class="instruction-blocks">
+          <div class="left-block">
+            <h3>Instructions for Application</h3>
+            <div class="instructions">
+              <p>
+                User Responsibilities: Users must provide accurate information during registration and maintain the confidentiality of their account credentials. Any unauthorized account use or security breaches must be reported immediately.
+              </p>
+              <p>
+                Prohibited Activities: Users are forbidden from engaging in unlawful activities such as unauthorized access or data mining that may disrupt platform functionality.
+              </p>
+              <p>
+                Platform Modifications: AMS reserves the right to modify or terminate services without prior notice. While efforts are made to ensure information accuracy, AMS does not guarantee completeness or suitability for any purpose.
+              </p>
+              <p>
+                Legal Jurisdiction: The use of our platform implies acceptance of these terms, consenting to the collection and use of personal information according to our Privacy Policy. Disputes shall be governed by the laws of India, with exclusive jurisdiction of Indian courts.
+              </p>
+              <p>
+                Data Privacy and Security: AMS is committed to protecting user data and will handle personal information in accordance with our Privacy Policy. Users consent to the collection, use, and processing of their data for platform operations.
+              </p>
+              <p>
+                Disclaimer of Warranties: AMS provides the platform on an "as is" and "as available" basis, without warranties of any kind. While we strive for platform reliability, AMS does not guarantee uninterrupted or error-free operation.
+              </p>
+            </div>
+          </div>
+          <div class="right-block">
+            <h3>same title in Marathi</h3>
+            <div class="instructions">
+              <p>
+                
+प्लॅटफॉर्म बदल: AMS पूर्वसूचना न देता सेवा सुधारण्याचा किंवा समाप्त करण्याचा अधिकार राखून ठेवते. माहितीची अचूकता सुनिश्चित करण्यासाठी प्रयत्न केले जात असताना, AMS कोणत्याही उद्देशासाठी पूर्णता किंवा योग्यतेची हमी देत ​​नाही.
+              </p>
+              <p>
+                प्रतिबंधित क्रियाकलाप: वापरकर्त्यांना बेकायदेशीर क्रियाकलापांमध्ये गुंतण्यास मनाई आहे जसे की अनधिकृत प्रवेश किंवा डेटा मायनिंग ज्यामुळे प्लॅटफॉर्म कार्यक्षमतेत व्यत्यय येऊ शकतो
+              </p>
+              <p>
+                प्लॅटफॉर्म बदल: AMS पूर्वसूचना न देता सेवा सुधारण्याचा किंवा समाप्त करण्याचा अधिकार राखून ठेवते. माहितीची अचूकता सुनिश्चित करण्यासाठी प्रयत्न केले जात असताना, AMS कोणत्याही उद्देशासाठी पूर्णता किंवा योग्यतेची हमी देत ​​नाही.
+              </p>
+              <p>
+                
+कायदेशीर अधिकारक्षेत्र: आमच्या प्लॅटफॉर्मचा वापर या अटींची स्वीकृती सूचित करतो, आमच्या गोपनीयता धोरणानुसार वैयक्तिक माहिती संग्रहित करण्यास आणि वापरण्यास संमती देतो. विवाद भारतीय न्यायालयांच्या अनन्य अधिकारक्षेत्रासह, भारताच्या कायद्यांद्वारे नियंत्रित केले जातील
+              </p>
+              <p>
+                
+डेटा गोपनीयता आणि सुरक्षा: AMS वापरकर्त्याच्या डेटाचे संरक्षण करण्यासाठी वचनबद्ध आहे आणि आमच्या गोपनीयता धोरणानुसार वैयक्तिक माहिती हाताळेल. प्लॅटफॉर्म ऑपरेशन्ससाठी वापरकर्ते त्यांच्या डेटाचे संकलन, वापर आणि प्रक्रिया करण्यास संमती देतात.
+              </p>
+              <p>
+                
+वॉरंटीजचा अस्वीकरण: AMS कोणत्याही प्रकारच्या वॉरंटीशिवाय "जसे आहे तसे" आणि "जसे उपलब्ध आहे" तत्त्वावर प्लॅटफॉर्म प्रदान करते. आम्ही प्लॅटफॉर्म विश्वासार्हतेसाठी प्रयत्न करत असताना, AMS अखंडित किंवा त्रुटी-मुक्त ऑपरेशनची हमी देत ​​नाही.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="submit-block">
+          <div class="submit-checkbox">
+          <input type="checkbox" name="terms-submit-btn" id="check" />
+            <p>I have read & understood above instructions</p>  
+          </div>
+          <form id="acceptTermsForm" method="post" action="{% url 'application' %}">
+            {% csrf_token %}
+            <button type="submit"  href="/program_choices" onclick="checkCheckbox()" class='nxtbtn'>Proceed</button>
+        </form>
+
+          <script>
+            function checkCheckbox(){
+            var checkbox = document.getElementById('check');
+
+            if (checkbox.checked) 
+          {
+              window.location.href = "/program_choices";
+           }
+          
+          else 
+          {
+              alert("Please read and understand the instructions before proceeding.");
+              event.preventDefault();
+          }
+        }
+          </script>
+        </div>
+
+      </div>
+    </div>
+    <script>
+      /*===== SHOW NAVBAR  =====*/ 
+  const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+  const toggle = document.getElementById(toggleId),
+  nav = document.getElementById(navId),
+  bodypd = document.getElementById(bodyId),
+  headerpd = document.getElementById(headerId)
+  
+  // Validate that all variables exist
+  if(toggle && nav && bodypd && headerpd){
+  toggle.addEventListener('click', ()=>{
+      // show navbar
+      nav.classList.toggle('show')
+      // change icon
+      toggle.classList.toggle('bx-x')
+      // add padding to body
+      bodypd.classList.toggle('body-pd')
+      // add padding to header
+      headerpd.classList.toggle('body-pd')
+  })
+  }
+  }
+  
+  showNavbar('header-toggle','nav-bar','body-pd','header')
+  
+  /*===== LINK ACTIVE  =====*/ 
+  const linkColor = document.querySelectorAll('.nav__link')
+  
+  function colorLink(){
+  if(linkColor){
+  linkColor.forEach(l=> l.classList.remove('active'))
+  this.classList.add('active')
+  }
+  }
+  linkColor.forEach(l=> l.addEventListener('click', colorLink))
+    </script>
+    <script>
+      const clockElement = document.getElementById('clock');
+  
+      function updateTime() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        clockElement.textContent = timeString;
+      }
+      
+      setInterval(updateTime, 1000); // Update time every second
+      updateTime(); // Initial update
+      
+  
+  </script>
+  <footer>
+    <hr class="hr-text">
+    &copy; Copyright © 2024 VJTI Mumbai. All rights reserved.
+  </footer>
+  </body>
+</html>

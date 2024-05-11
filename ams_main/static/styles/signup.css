@@ -1,0 +1,145 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
+    overflow-y: hidden;
+}
+
+/* Wrapper styles */
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.container-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* width: 70%; */
+    max-width: 1000px;
+    margin: 0 auto;
+    height: 800px; /* Change height to 900px */
+}
+
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.2);
+}
+
+.side-image {
+    display: none;
+}
+
+/* Right container styles */
+.right {
+    padding: 20px;
+}
+
+/* Form styles */
+.input-box {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Header styles */
+header {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+/* Input field styles */
+.input-field {
+    margin-bottom: 20px;
+}
+
+.input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+.input:focus {
+    border-color: #1e90ff;
+}
+
+/* Submit button styles */
+.submit {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(315deg, #2b4162 0%, #12100e 74%);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+}
+
+.submit:hover {
+    background-color: #007bff;
+}
+
+/* Sign-in link styles */
+.signin {
+    margin-top: 20px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.signin a {
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+.signin a:hover {
+    text-decoration: underline;
+}
+
+@media screen and (min-width: 429px) {
+    .row {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .side-image {
+        display: block;
+        background-image: url("../../static/resources/sideimage.jpeg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        position: relative;
+        border-radius: 10px 0 0 10px;
+        height: 100%;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .right {
+        flex: 1;
+        padding: 50px;
+    }
+
+    .container-main {
+        height: 60vh;
+    }
+}

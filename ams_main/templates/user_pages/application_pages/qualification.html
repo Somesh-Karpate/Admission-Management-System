@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+{%load static%}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>template</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../static/styles/student2.css" />
+    <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+  </head>
+
+  <body id="body-pd">
+    <header class="header" id="header">
+        <div class="header__toggle">
+            <i class='bx bx-menu' id="header-toggle"></i>
+        </div>
+
+        <div >
+            <a href="/signout" class="logout-link">
+              <button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button>
+            </a>
+        </div>
+        
+    </header>
+
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div class="nav__list">
+              <a  class="nav__link">
+                <i class='bx bx-dots-vertical-rounded nav__icon' ></i>
+                <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"style="color:#FFFFFF;
+                width: 100px;
+                border-radius: 50%;"/>
+            </a>
+                
+            {% if user.is_authenticated %} {% for user_data in all_user_data %}
+           
+              <a  class="nav__link">
+                <i class='bx bx-tag-alt nav__icon' ></i>
+                <h3 class="nav__name">{{ user_data.first_name }} {{ user_data.last_name }}</h3>
+            </a>
+            {% endfor %} {% endif %}
+           
+
+                <div class="nav__list">
+                    <a href="/dashboard" class="nav__link ">
+                    <i class='bx bx-grid-alt nav__icon' ></i>
+                        <span class="nav__name">Dashboard</span>
+                    </a>
+
+                    <a href="/user_profile" class="nav__link ">
+                        <i class='bx bx-user nav__icon' ></i>
+                        <span class="nav__name">My Profile</span>
+                    </a>
+                    
+                    <a href="/application" class="nav__link active">
+                        <i class='bx bxs-file nav__icon' ></i>
+                        <span class="nav__name">Application</span>
+                    </a>
+
+                    <a href="/approval" class="nav__link ">
+                        <i class='bx bx-bookmark nav__icon' ></i>
+                        <span class="nav__name">Approval</span>
+                    </a>
+
+                    <a href="/merit_list" class="nav__link">
+                        <i class='bx bx-folder nav__icon' ></i>
+                        <span class="nav__name">Merit List</span>
+                    </a>
+
+                   
+                </div>
+            </div>
+
+       
+            <a  class="nav__link">
+              <i class='bx bx-timer nav__icon' ></i>
+              <div id="clock"></div>
+          </a>
+              
+        
+        </nav>
+    </div>
+    <br>
+    <div class="container1"> 
+      <h1>Qualificaion Details</h1>
+      <hr class="hr-text">
+  </div>
+        <!-- START YOUR CODE HERE -->
+        <div class="temp">
+          <div class="container">
+            <form method="POST" action="/qualification">
+              {% csrf_token %}
+              <div class="form first">
+                <div class="details personal">
+                  <h4>10th/S.S.C/Diploma Aggregate</h4>
+                  <div class="fields">
+                    <div class="input-field">
+                        <label>Marks Obtained</label>
+                        {{ form.ssc_marks }}
+                        <span id="ssc_marks_error" class="error-message"></span>
+                        <style>
+                            .error-message {
+                                color: red;
+                                font-size: 14px;
+                            }
+                        </style>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                var saveButton = document.querySelector(".nxtbtn");
+                                var sscMarksInput = document.getElementById("id_ssc_marks");
+                                var sscPercentInput = document.getElementById("id_ssc_percent");
+                                var sscMarksError = document.getElementById("ssc_marks_error");
+                    
+                                sscMarksInput.addEventListener("input", function () {
+                                    validateSSCMarks();
+                                });
+                    
+                                // Update the percentage field when it receives focus
+                                sscPercentInput.addEventListener("focus", function () {
+                                    sscPercentInput.value = sscMarksInput.value;
+                                });
+                    
+                                function validateSSCMarks() {
+                                    sscMarksError.innerHTML = "";
+                    
+                                    var sscMarks = sscMarksInput.value.trim();
+                    
+                                    if (sscMarks === "") {
+                                        showError("Marks Obtained cannot be empty.");
+                                    } else if (!isValidMarks(sscMarks)) {
+                                        showError("Marks Obtained should be between 0 and 100.");
+                                    } else if (containsSpecialCharacters(sscMarks)) {
+                                        showError("Marks should not contain special characters.");
+                                    } else {
+                                        clearError();
+                                        sscPercentInput.value = sscMarks; // Copy marks to percentage field
+                                    }
+                                }
+                    
+                                function showError(message) {
+                                    sscMarksError.innerHTML = "!" + message;
+                                    saveButton.disabled = true;
+                                }
+                    
+                                function clearError() {
+                                    sscMarksError.innerHTML = "";
+                                    saveButton.disabled = false;
+                                }
+                    
+                                function isValidMarks(marks) {
+                                    var parsedMarks = parseFloat(marks);
+                                    return !isNaN(parsedMarks) && parsedMarks >= 0 && parsedMarks <= 100;
+                                }
+                    
+                                function containsSpecialCharacters(marks) {
+                                    return /[@#$%^&*(){};:.<>?/|~+-]/.test(marks);
+                                }
+                            });
+                        </script>
+                    </div>
+                    
+                  <div class="input-field">
+                      <label>Marks Out of </label>
+                      <input value="100" readonly />
+                  </div>
+                  
+                  <div class="input-field">
+                    <label>Percentage</label>
+                    {{ form.ssc_percent }}
+                    <span id="ssc_percent_error" class="error-message"></span>
+                    <style>
+                        .error-message {
+                            color: red;
+                            font-size: 14px;
+                        }
+                    </style>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            var saveButton = document.querySelector(".nxtbtn");
+                            var sscPercentInput = document.getElementById("id_ssc_percent");
+                            var sscPercentError = document.getElementById("ssc_percent_error");
+                
+                            sscPercentInput.addEventListener("input", function () {
+                                validateSSCPercent();
+                            });
+                
+                            function validateSSCPercent() {
+                                sscPercentError.innerHTML = "";
+                
+                                var sscPercent = sscPercentInput.value.trim();
+                
+                                if (sscPercent === "") {
+                                    showError("Percentage cannot be empty.");
+                                } else if (!isValidPercentage(sscPercent)) {
+                                    showError("Percentage should be between 0 and 100.");
+                                } else if (containsSpecialCharacters(sscPercent)) {
+                                    showError("Percentage should not contain special characters.");
+                                } else {
+                                    clearError();
+                                }
+                            }
+                
+                            function showError(message) {
+                                sscPercentError.innerHTML = "!" + message;
+                                saveButton.disabled = true;
+                            }
+                
+                            function clearError() {
+                                sscPercentError.innerHTML = "";
+                                saveButton.disabled = false;
+                            }
+                
+                            function isValidPercentage(percentage) {
+                                var parsedPercentage = parseFloat(percentage);
+                                return !isNaN(parsedPercentage) && parsedPercentage >= 0 && parsedPercentage <= 100;
+                            }
+                
+                            function containsSpecialCharacters(percentage) {
+                                return /[@#$%^&*(){};:.<>?/|~+-]/.test(percentage);
+                            }
+                        });
+                    </script>
+                </div>
+                
+                  </div>
+
+
+                  <h4>12th/H.S.S.C Aggregate</h4>
+                  <div class="fields">
+                    <div class="input-field">
+                      <label>Marks Obtained</label>
+                      {{form.hsc_marks}}
+                      <span id="hssc_marks_error" class="error-message"></span>
+                      <style>
+                          .error-message {
+                              color: red;
+                              font-size: 14px;
+                          }
+                      </style>
+                      <script>
+                          document.addEventListener("DOMContentLoaded", function () {
+                              var saveButton = document.querySelector(".nxtbtn");
+                              var sscMarksInput = document.getElementById("id_hsc_marks");
+                              var sscPercentInput = document.getElementById("id_hsc_percent");
+                              var sscMarksError = document.getElementById("hssc_marks_error");
+                  
+                              sscMarksInput.addEventListener("input", function () {
+                                  validateSSCMarks();
+                              });
+                  
+                              // Update the percentage field when it receives focus
+                              sscPercentInput.addEventListener("focus", function () {
+                                  sscPercentInput.value = sscMarksInput.value;
+                              });
+                  
+                              function validateSSCMarks() {
+                                  sscMarksError.innerHTML = "";
+                  
+                                  var sscMarks = sscMarksInput.value.trim();
+                  
+                                  if (sscMarks === "") {
+                                      showError("Marks Obtained cannot be empty.");
+                                  } else if (!isValidMarks(sscMarks)) {
+                                      showError("Marks Obtained should be between 0 and 100.");
+                                  } else if (containsSpecialCharacters(sscMarks)) {
+                                      showError("Marks should not contain special characters.");
+                                  } else {
+                                      clearError();
+                                      sscPercentInput.value = sscMarks; // Copy marks to percentage field
+                                  }
+                              }
+                  
+                              function showError(message) {
+                                  sscMarksError.innerHTML = "!" + message;
+                                  saveButton.disabled = true;
+                              }
+                  
+                              function clearError() {
+                                  sscMarksError.innerHTML = "";
+                                  saveButton.disabled = false;
+                              }
+                  
+                              function isValidMarks(marks) {
+                                  var parsedMarks = parseFloat(marks);
+                                  return !isNaN(parsedMarks) && parsedMarks >= 0 && parsedMarks <= 100;
+                              }
+                  
+                              function containsSpecialCharacters(marks) {
+                                  return /[@#$%^&*(){};:.<>?/|~+-]/.test(marks);
+                              }
+                          });
+                      </script>
+                  </div>
+                  
+                  <div class="input-field">
+                      <label>Marks Out of </label>
+                      <input value="100" readonly />
+                  </div>
+                  
+                  <div class="input-field">
+                      <label>Percentage</label>
+                      {{form.hsc_percent}}
+                      <span id="hsc_percent_error" class="error-message"></span>
+                    <style>
+                        .error-message {
+                            color: red;
+                            font-size: 14px;
+                        }
+                    </style>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            var saveButton = document.querySelector(".nxtbtn");
+                            var sscPercentInput = document.getElementById("id_hsc_percent");
+                            var sscPercentError = document.getElementById("hsc_percent_error");
+                
+                            sscPercentInput.addEventListener("input", function () {
+                                validateSSCPercent();
+                            });
+                
+                            function validateSSCPercent() {
+                                sscPercentError.innerHTML = "";
+                
+                                var sscPercent = sscPercentInput.value.trim();
+                
+                                if (sscPercent === "") {
+                                    showError("Percentage cannot be empty.");
+                                } else if (!isValidPercentage(sscPercent)) {
+                                    showError("Percentage should be between 0 and 100.");
+                                } else if (containsSpecialCharacters(sscPercent)) {
+                                    showError("Percentage should not contain special characters.");
+                                } else {
+                                    clearError();
+                                }
+                            }
+                
+                            function showError(message) {
+                                sscPercentError.innerHTML = "!" + message;
+                                saveButton.disabled = true;
+                            }
+                
+                            function clearError() {
+                                sscPercentError.innerHTML = "";
+                                saveButton.disabled = false;
+                            }
+                
+                            function isValidPercentage(percentage) {
+                                var parsedPercentage = parseFloat(percentage);
+                                return !isNaN(parsedPercentage) && parsedPercentage >= 0 && parsedPercentage <= 100;
+                            }
+                
+                            function containsSpecialCharacters(percentage) {
+                                return /[@#$%^&*(){};:.<>?/|~+-]/.test(percentage);
+                            }
+                        });
+                    </script><!-- <input type="text" id="id_hsc_percent" name="hsc_percent" readonly /> -->
+                  </div>
+                  
+                  </div>
+
+
+
+                  <h4>S.S.C Mathematics</h4>
+                  <div class="fields">
+                    <div class="input-field">
+                        <label>Marks Obtained</label>
+                        {{form.maths_marks}}
+                        <span id="maths_marks_error" class="error-message"></span>
+                        <style>
+                            .error-message {
+                                color: red;
+                                font-size: 14px;
+                            }
+                        </style>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                var saveButton = document.querySelector(".nxtbtn");
+                                var sscMarksInput = document.getElementById("id_maths_marks");
+                                var sscPercentInput = document.getElementById("id_maths_percent");
+                                var sscMarksError = document.getElementById("maths_marks_error");
+                    
+                                sscMarksInput.addEventListener("input", function () {
+                                    validateSSCMarks();
+                                });
+                    
+                                // Update the percentage field when it receives focus
+                                sscPercentInput.addEventListener("focus", function () {
+                                    sscPercentInput.value = sscMarksInput.value;
+                                });
+                    
+                                function validateSSCMarks() {
+                                    sscMarksError.innerHTML = "";
+                    
+                                    var sscMarks = sscMarksInput.value.trim();
+                    
+                                    if (sscMarks === "") {
+                                        showError("Marks Obtained cannot be empty.");
+                                    } else if (!isValidMarks(sscMarks)) {
+                                        showError("Marks Obtained should be between 0 and 100.");
+                                    } else if (containsSpecialCharacters(sscMarks)) {
+                                        showError("Marks should not contain special characters.");
+                                    } else {
+                                        clearError();
+                                        sscPercentInput.value = sscMarks; // Copy marks to percentage field
+                                    }
+                                }
+                    
+                                function showError(message) {
+                                    sscMarksError.innerHTML = "!" + message;
+                                    saveButton.disabled = true;
+                                }
+                    
+                                function clearError() {
+                                    sscMarksError.innerHTML = "";
+                                    saveButton.disabled = false;
+                                }
+                    
+                                function isValidMarks(marks) {
+                                    var parsedMarks = parseFloat(marks);
+                                    return !isNaN(parsedMarks) && parsedMarks >= 0 && parsedMarks <= 100;
+                                }
+                    
+                                function containsSpecialCharacters(marks) {
+                                    return /[@#$%^&*(){};:.<>?/|~+-]/.test(marks);
+                                }
+                            });
+                        </script>
+                    </div>
+                
+                    <div class="input-field">
+                        <label>Marks Out of </label>
+                        <input value="100" readonly />
+                    </div>
+                
+                    <div class="input-field">
+                        <label>Percentage</label>
+                        {{ form.maths_percent }}
+                        <span id="maths_percent_error" class="error-message"></span>
+                        <style>
+                            .error-message {
+                                color: red;
+                                font-size: 14px;
+                            }
+                        </style>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                var saveButton = document.querySelector(".nxtbtn");
+                                var mathsMarksInput = document.getElementById("id_maths_marks");
+                                var mathsPercentInput = document.getElementById("id_maths_percent");
+                                var mathsMarksError = document.getElementById("maths_percent_error");
+                    
+                                mathsMarksInput.addEventListener("input", function () {
+                                    validateMathsMarks();
+                                });
+                    
+                                // Update the percentage field when it receives focus
+                                mathsPercentInput.addEventListener("focus", function () {
+                                    mathsPercentInput.value = mathsMarksInput.value;
+                                });
+                    
+                                function validateMathsMarks() {
+                                    mathsMarksError.innerHTML = "";
+                    
+                                    var mathsMarks = mathsMarksInput.value.trim();
+                    
+                                    if (mathsMarks === "") {
+                                        showError("Percentage Obtained cannot be empty.");
+                                    } else if (!isValidMarks(mathsMarks)) {
+                                        showError("Percentage Obtained should be between 0 and 100.");
+                                    } else if (containsSpecialCharacters(mathsMarks)) {
+                                        showError("Percentage should not contain special characters.");
+                                    } else {
+                                        clearError();
+                                        mathsPercentInput.value = mathsMarks;
+                                    }
+                                }
+                    
+                                function showError(message) {
+                                    mathsMarksError.innerHTML = "!" + message;
+                                    saveButton.disabled = true;
+                                }
+                    
+                                function clearError() {
+                                    mathsMarksError.innerHTML = "";
+                                    saveButton.disabled = false;
+                                }
+                    
+                                function isValidMarks(marks) {
+                                    var parsedMarks = parseFloat(marks);
+                                    return !isNaN(parsedMarks) && parsedMarks >= 0 && parsedMarks <= 100;
+                                }
+                    
+                                function containsSpecialCharacters(marks) {
+                                    return /[@#$%^&*(){};:.<>?/|!~+-]/.test(marks);
+                                }
+                            });
+                        </script>
+                    </div>
+                    </div>
+
+
+                  <h4>S.S.C Science</h4>
+                  <div class="fields">
+                    <div class="input-field">
+                        <label>Marks Obtained</label>
+                        {{form.science_marks}}
+                        <span id="science_marks_error" class="error-message"></span>
+                        <style>
+                            .error-message {
+                                color: red;
+                                font-size: 14px;
+                            }
+                        </style>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                var saveButton = document.querySelector(".nxtbtn");
+                                var sscMarksInput = document.getElementById("id_science_marks");
+                                var sscPercentInput = document.getElementById("id_science_percent");
+                                var sscMarksError = document.getElementById("science_marks_error");
+                    
+                                sscMarksInput.addEventListener("input", function () {
+                                    validateSSCMarks();
+                                });
+                    
+                                // Update the percentage field when it receives focus
+                                sscPercentInput.addEventListener("focus", function () {
+                                    sscPercentInput.value = sscMarksInput.value;
+                                });
+                    
+                                function validateSSCMarks() {
+                                    sscMarksError.innerHTML = "";
+                    
+                                    var sscMarks = sscMarksInput.value.trim();
+                    
+                                    if (sscMarks === "") {
+                                        showError("Marks Obtained cannot be empty.");
+                                    } else if (!isValidMarks(sscMarks)) {
+                                        showError("Marks Obtained should be between 0 and 100.");
+                                    } else if (containsSpecialCharacters(sscMarks)) {
+                                        showError("Marks should not contain special characters.");
+                                    } else {
+                                        clearError();
+                                        sscPercentInput.value = sscMarks; // Copy marks to percentage field
+                                    }
+                                }
+                    
+                                function showError(message) {
+                                    sscMarksError.innerHTML = "!" + message;
+                                    saveButton.disabled = true;
+                                }
+                    
+                                function clearError() {
+                                    sscMarksError.innerHTML = "";
+                                    saveButton.disabled = false;
+                                }
+                    
+                                function isValidMarks(marks) {
+                                    var parsedMarks = parseFloat(marks);
+                                    return !isNaN(parsedMarks) && parsedMarks >= 0 && parsedMarks <= 100;
+                                }
+                    
+                                function containsSpecialCharacters(marks) {
+                                    return /[@#$%^&*(){};:.<>?/|~+-]/.test(marks);
+                                }
+                            });
+                        </script>
+                    </div>
+                
+                    <div class="input-field">
+                        <label>Marks Out of </label>
+                        <input value="100" readonly />
+                    </div>
+                
+                    <div class="input-field">
+                        <label>Percentage</label>
+                        {{ form.science_percent }}
+                        <span id="science_percent_error" class="error-message"></span>
+                        <style>
+                            .error-message {
+                                color: red;
+                                font-size: 14px;
+                            }
+                        </style>
+                        <script>
+                            document.addEventListener("DOMContentLoaded", function () {
+                                var saveButton = document.querySelector(".nxtbtn");
+                    
+                                var sciencePercentInput = document.getElementById("id_science_percent");
+                                var sciencePercentError = document.getElementById("science_percent_error");
+                    
+                                sciencePercentInput.addEventListener("input", function () {
+                                    var sciencePercent = sciencePercentInput.value.trim();
+                    
+                                    // Clear previous error messages
+                                    sciencePercentError.innerHTML = "";
+                    
+                                    if (sciencePercent === "") {
+                                        sciencePercentError.innerHTML = "! Percentage Obtained cannot be empty.";
+                                        saveButton.disabled = true;
+                                    } else if (sciencePercent < 0 || sciencePercent > 100) {
+                                        sciencePercentError.innerHTML = "! Percentage Obtained should be between 0 and 100.";
+                                        saveButton.disabled = true;
+                                    } else if (/[@#$%^&*(){};:.<>?/|!~+-]/.test(sciencePercent)) {
+                                        sciencePercentError.innerHTML = "! Percentage should not contain special characters.";
+                                        saveButton.disabled = true;
+                                    } else {
+                                        // Remove error and enable button when the field is complete
+                                        sciencePercentError.innerHTML = "";
+                                        saveButton.disabled = false;
+                                    }
+                                });
+                            });
+                        </script>
+                    </div>
+                    
+                </div>
+                
+                </div>
+
+
+                <h4>S.S.C English</h4>
+                 <div class="fields">
+                  <div class="input-field">
+                      <label>Marks Obtained</label>
+                      {{form.english_marks}}
+                      <span id="english_marks_error" class="error-message"></span>
+                      <style>
+                          .error-message {
+                              color: red;
+                              font-size: 14px;
+                          }
+                      </style>
+                      <script>
+                          document.addEventListener("DOMContentLoaded", function () {
+                              var saveButton = document.querySelector(".nxtbtn");
+                              var sscMarksInput = document.getElementById("id_english_marks");
+                              var sscPercentInput = document.getElementById("id_english_percent");
+                              var sscMarksError = document.getElementById("english_marks_error");
+                  
+                              sscMarksInput.addEventListener("input", function () {
+                                  validateSSCMarks();
+                              });
+                  
+                              // Update the percentage field when it receives focus
+                              sscPercentInput.addEventListener("focus", function () {
+                                  sscPercentInput.value = sscMarksInput.value;
+                              });
+                  
+                              function validateSSCMarks() {
+                                  sscMarksError.innerHTML = "";
+                  
+                                  var sscMarks = sscMarksInput.value.trim();
+                  
+                                  if (sscMarks === "") {
+                                      showError("Marks Obtained cannot be empty.");
+                                  } else if (!isValidMarks(sscMarks)) {
+                                      showError("Marks Obtained should be between 0 and 100.");
+                                  } else if (containsSpecialCharacters(sscMarks)) {
+                                      showError("Marks should not contain special characters.");
+                                  } else {
+                                      clearError();
+                                      sscPercentInput.value = sscMarks; // Copy marks to percentage field
+                                  }
+                              }
+                  
+                              function showError(message) {
+                                  sscMarksError.innerHTML = "!" + message;
+                                  saveButton.disabled = true;
+                              }
+                  
+                              function clearError() {
+                                  sscMarksError.innerHTML = "";
+                                  saveButton.disabled = false;
+                              }
+                  
+                              function isValidMarks(marks) {
+                                  var parsedMarks = parseFloat(marks);
+                                  return !isNaN(parsedMarks) && parsedMarks >= 0 && parsedMarks <= 100;
+                              }
+                  
+                              function containsSpecialCharacters(marks) {
+                                  return /[@#$%^&*(){};:.<>?/|~+-]/.test(marks);
+                              }
+                          });
+                      </script>
+                  </div>
+              
+                  <div class="input-field">
+                      <label>Marks Out of </label>
+                      <input value="100" readonly />
+                  </div>
+              
+                  <div class="input-field">
+                    <label>Percentage</label>
+                    {{ form.english_percent }}
+                    <span id="english_percent_error" class="error-message"></span>
+                    <style>
+                        .error-message {
+                            color: red;
+                            font-size: 14px;
+                        }
+                    </style>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            var saveButton = document.querySelector(".nxtbtn");
+                
+                            var mahcetScoreInput = document.getElementById("id_english_percent");
+                            var mahcetScoreError = document.getElementById("english_percent_error");
+                
+                            mahcetScoreInput.addEventListener("input", function () {
+                                mahcetScoreError.innerHTML = "";
+                
+                                var cet = mahcetScoreInput.value.trim();
+                
+                                if (cet === "") {
+                                    mahcetScoreError.innerHTML = "! Percentage Obtained cannot be empty.";
+                                    saveButton.disabled = true;
+                                } else if (cet < 0 || cet > 100) {
+                                    mahcetScoreError.innerHTML = "! Percentage Obtained should be between 0 and 100.";
+                                    saveButton.disabled = true;
+                                } else if (/[@#$%^&*(){};:.<>?/|!~+-]/.test(cet)) {
+                                    mahcetScoreError.innerHTML = "! Percentage should not contain special characters.";
+                                    saveButton.disabled = true;
+                                } else {
+                                    saveButton.disabled = false;
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+
+                  <div class="input-field">
+                    <label>MAH CET SCORE</label>
+                    {{ form.mahcet_score }}
+                    <span id="mahcet_score_error" class="error-message"></span>
+                    <style>
+                        .error-message {
+                            color: red;
+                            font-size: 14px;
+                        }
+                    </style>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            var saveButton = document.querySelector(".nxtbtn");
+                
+                            var mahcetScoreInput = document.getElementById("id_mahcet_score");
+                            var mahcetScoreError = document.getElementById("mahcet_score_error");
+                
+                            mahcetScoreInput.addEventListener("input", function () {
+                                mahcetScoreError.innerHTML = "";
+                
+                                var cet = mahcetScoreInput.value.trim();
+                
+                                if (cet === "") {
+                                    mahcetScoreError.innerHTML = "! Score Obtained cannot be empty.";
+                                    saveButton.disabled = true;
+                                } else if (cet < 0 || cet > 100) {
+                                    mahcetScoreError.innerHTML = "! Score Obtained should be between 0 and 100.";
+                                    saveButton.disabled = true;
+                                } else if (/[@#$%^&*(){};:<>?/|!~+-]/.test(cet)) {
+                                    mahcetScoreError.innerHTML = "! Score should not contain special characters.";
+                                    saveButton.disabled = true;
+                                } else {
+                                    saveButton.disabled = false;
+                                }
+                            });
+                        });
+                    </script>
+                </div>
+                </div>
+                <br>
+                <div class="button-container">
+                <a href="/address" onclick="history.go(-1);" class="backbtn">
+                  <span class="btnText">Back</span>
+                  <i class="uil uil navigator"></i>
+                </a>
+                <br />
+
+
+                {% if not is_submitted %}
+                <button class="nxtbtn" >
+                    <span class="btnText">Next</span>
+                    <i class="uil uil navigator"></i>
+                </button>
+
+              </div>
+
+                {% else %}
+                <a href="graduation" class="nxtbtn">Next</a>
+                {%endif%}
+              </div>
+            </form>
+          </div>
+        </div>
+      
+
+      </div>
+    </div>
+    
+    <script src="../../../static/styles/script.js" async defer></script>
+    <script>
+      // Get the current date and time
+const currentDate = new Date();
+const dateElement = document.getElementById('current-date');
+const timeElement = document.getElementById('current-time');
+
+// Format the date and time
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const formattedDate = currentDate.toLocaleDateString('en-US', options);
+const formattedTime = currentDate.toLocaleTimeString('en-US');
+
+// Update the content of the elements
+dateElement.textContent =  formattedDate;
+timeElement.textContent = formattedTime;
+
+
+  </script>
+  <footer>
+    <hr class="hr-text">
+    &copy; Copyright © 2024 VJTI Mumbai. All rights reserved.
+  </footer>
+  </body>
+</html>

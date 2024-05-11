@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Details</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{%static 'styles/user_profile.css'%}" />
+    <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+  </head>
+  <body id="body-pd">
+    <header class="header" id="header">
+        <div class="header__toggle">
+            <i class='bx bx-menu' id="header-toggle"></i>
+        </div>
+
+        <div >
+            <a href="/signout" class="logout-link">
+              <button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button>
+            </a>
+        </div>
+        
+    </header>
+
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div class="nav__list">
+              <a  class="nav__link">
+                <i class='bx bx-dots-vertical-rounded nav__icon' ></i>
+                <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"style="color:#FFFFFF;
+                width: 100px;
+                border-radius: 50%;"/>
+            </a>
+                
+            {% if user.is_authenticated %} {% for user_data in all_user_data %}
+           
+              <a  class="nav__link">
+                <i class='bx bx-tag-alt nav__icon' ></i>
+                <h3 class="nav__name">{{ user_data.first_name }} {{ user_data.last_name }}</h3>
+            </a>
+            {% endfor %} {% endif %}
+           
+
+                <div class="nav__list">
+                    <a href="/dashboard" class="nav__link ">
+                    <i class='bx bx-grid-alt nav__icon' ></i>
+                        <span class="nav__name">Dashboard</span>
+                    </a>
+
+                    <a href="/user_profile" class="nav__link active">
+                        <i class='bx bx-user nav__icon' ></i>
+                        <span class="nav__name">My Profile</span>
+                    </a>
+                    
+                    <a href="/application" class="nav__link">
+                        <i class='bx bxs-file nav__icon' ></i>
+                        <span class="nav__name">Application</span>
+                    </a>
+
+                    <a href="/approval" class="nav__link">
+                        <i class='bx bx-bookmark nav__icon' ></i>
+                        <span class="nav__name">Approval</span>
+                    </a>
+
+                    <a href="/merit_list" class="nav__link">
+                        <i class='bx bx-folder nav__icon' ></i>
+                        <span class="nav__name">Merit List</span>
+                    </a>
+
+                   
+                </div>
+            </div>
+
+       
+            <a  class="nav__link">
+              <i class='bx bx-timer nav__icon' ></i>
+              <div id="clock"></div>
+          </a>
+              
+        
+        </nav>
+    </div>
+    <br>
+    <div class="container"> 
+      <h1>My Profile</h1>
+      <hr class="hr-text">
+  </div>
+      
+        
+      <div class="application">
+        <!-- START YOUR CODE HERE -->
+        
+        <div class="top-layer">
+          <div class="user-image">
+            <img
+              src="../../static/resources/default-user-icon-8.jpg"
+              alt="user-image" 
+            />
+            {% if user.is_authenticated %} {% for user_data in all_user_data %}
+
+            <h1>{{ user_data.first_name }} {{ user_data.last_name }}</h1>
+
+            {% endfor %} {% endif %} {% comment %}
+            <h1>{{ user_data.first_name }} {{ user_data.last_name }}</h1>
+            {% endcomment %}
+          </div>
+        </div><br><br>
+        <div class="table-container">
+        <div class="table-struct">
+          <table>
+            <tr>
+              <th>Name</th>
+              <td>
+                {{ all_user_data.0.first_name }} {{ all_user_data.0.last_name }}
+              </td>
+            </tr>
+            <tr>
+              <th>Gender</th>
+              <td>{{ all_user_data.0.gender }}</td>
+            </tr>
+            <tr>
+              <th>Date of Birth</th>
+              <td>{{ all_user_data.0.date_of_birth }}</td>
+            </tr>
+            <tr>
+              <th>Nationality</th>
+              <td>{{ all_user_data.0.nationality }}</td>
+            </tr>
+            <tr>
+              <th>Annual Income</th>
+              <td>{{ all_user_data.0.annual_income }}</td>
+            </tr>
+            <!--contact details-->
+            <tr>
+              <th>Contact Number</th>
+              <td>{{ all_user_data.0.contact_number }}</td>
+            </tr>
+            <tr>
+              <th>Alternative Contact Number</th>
+              <td>{{ all_user_data.0.alternate_contact_number }}</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>{{ all_user_data.0.email }}</td>
+            </tr>
+            <tr>
+              <th>Guardian Name</th>
+              <td>{{ all_user_data.0.guardian_name }}</td>
+            </tr>
+            <tr>
+              <th>Guardian Contact</th>
+              <td>{{ all_user_data.0.guardian_contact }}</td>
+            </tr>
+
+            <tr>
+              <th>address_line1</th>
+              <td>{{ all_user_data.0.address_line1 }}</td>
+            </tr>
+            <tr>
+              <th>address_line2</th>
+              <td>{{ all_user_data.0.address_line2 }}</td>
+            </tr>
+            <tr>
+              <th>landmark</th>
+              <td>{{ all_user_data.0.landmark}}</td>
+            </tr>
+            <tr>
+              <th>town_city</th>
+              <td>{{ all_user_data.0.town_city }}</td>
+            </tr>
+            <tr>
+              <th>pincode</th>
+              <td>{{ all_user_data.0.pincode }}</td>
+            </tr>
+            <tr>
+              <th>district</th>
+              <td>{{ all_user_data.0.district }}</td>
+            </tr>
+            <tr>
+              <th>state</th>
+              <td>{{ all_user_data.0.state }}</td>
+            </tr>
+            <tr>
+              <th>permanent_address</th>
+              <td>{{ all_user_data.0.permanent_address }}</td>
+            </tr>
+          </table>
+
+          <a href="/personal_details"><i class="bx bxs-edit-alt"></i></a>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    /*===== SHOW NAVBAR  =====*/ 
+const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+const toggle = document.getElementById(toggleId),
+nav = document.getElementById(navId),
+bodypd = document.getElementById(bodyId),
+headerpd = document.getElementById(headerId)
+
+// Validate that all variables exist
+if(toggle && nav && bodypd && headerpd){
+toggle.addEventListener('click', ()=>{
+    // show navbar
+    nav.classList.toggle('show')
+    // change icon
+    toggle.classList.toggle('bx-x')
+    // add padding to body
+    bodypd.classList.toggle('body-pd')
+    // add padding to header
+    headerpd.classList.toggle('body-pd')
+})
+}
+}
+
+showNavbar('header-toggle','nav-bar','body-pd','header')
+
+/*===== LINK ACTIVE  =====*/ 
+const linkColor = document.querySelectorAll('.nav__link')
+
+function colorLink(){
+if(linkColor){
+linkColor.forEach(l=> l.classList.remove('active'))
+this.classList.add('active')
+}
+}
+linkColor.forEach(l=> l.addEventListener('click', colorLink))
+  </script>
+  <script>
+    const clockElement = document.getElementById('clock');
+
+    function updateTime() {
+      const now = new Date();
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const seconds = now.getSeconds().toString().padStart(2, '0');
+      const timeString = `${hours}:${minutes}:${seconds}`;
+      clockElement.textContent = timeString;
+    }
+    
+    setInterval(updateTime, 1000); // Update time every second
+    updateTime(); // Initial update
+    
+
+</script>
+<footer>
+  <hr class="hr-text">
+  &copy; Copyright © 2024 VJTI Mumbai. All rights reserved.
+</footer>
+  </body>
+</html>

@@ -1,0 +1,296 @@
+{% comment %} <!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Dashboard - AMS [VJTI]</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}" />
+  </head>
+  <body>
+    
+    <!-- sidebar -->
+    <div class="main-body">
+      <input type="checkbox" id="sidebar-toggle">
+      <label for="sidebar-toggle" class="sidebar-icon">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </label>
+      <aside class="sidebar">
+        <nav>
+            <div class="sidebar-elements">
+                <div class="student-details">
+                    <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"/>
+                    {% csrf_token %} 
+                    {% if user.is_authenticated %}
+                    <h3>{{fname}} {{lname}}</h3>
+                    {% endif %}
+                </div>
+                <div class="sidebar-buttons">
+                    <div class="route-buttons">
+                        <a href="/dashboard" class="button">
+                            <i class="bx bxs-widget"></i>
+                            <p>Dashboard</p>
+                        </a>
+                        <a href="/user_profile" class="button">
+                            <i class="bx bx-user"></i>
+                            <p>My Profile</p>
+                        </a>
+                        <a href="/application" class="button">
+                            <i class="bx bxs-file"></i>
+                            <p>Application</p>
+                        </a>
+                        <a href="/approval" class="button">
+                            <i class="bx bxs-file"></i>
+                            <p>Approval</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </aside>
+    
+      
+      <!-- dashboard -->
+      
+      <aside class="dashboard">
+        <div class="navbar">
+          <a href="/signout"><button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button></a>
+        </div>
+        <div class="content-layers">
+          <div class="top-layer">
+            <div class="top-layer-text">
+              {% if user.is_authenticated %}
+              <h3>Welcome back, {{fname}} {{lname}}!</h3>
+              {% endif %}
+              <p>Let's start by filling out the form</p>
+              <div class="top-layer-apply-button">
+                <a href="application"
+                >Apply Now<span><i class="bx bxs-chevron-right"></i></span
+                  ></a></div>
+                </div>
+                <div class="top-layer-img">
+                  <img
+                  src="{% static 'resources/crs-img-4.svg' %}"
+                  alt="top-layer-image"
+                  />
+                </div>
+              </div>
+              <div class="bottom-layer">
+                <div class="progress-layer">
+                  <h3>Steps to Apply</h3>
+                  <div class="progress-element">
+                    <h4>Step Name</h4>
+                    <h4>Status</h4>
+                  </div>
+                  <div class="progress-element">
+                    <a href='/personal_details'><p>1. Personal Details</p></a>
+                    <p class="p-element" style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if personal_details_completed %}Completed{% else %}Pending{% endif %}</p>
+                  </div>
+                  <div class="progress-element">
+                <a href='/contact_details'><p>2. Contact Details</p></a>
+                <p class="p-element"style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if contact_details_completed %}Completed{% else %}Pending{% endif %}</p>
+              </div>
+              <div class="progress-element">
+                <a href='/address'><p>3. Address</p></a>
+                <p class="p-element"style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if address_details_completed %}Completed{% else %}Pending{% endif %}</p>
+              </div>
+              <div class="progress-element">
+                <a href='/qualification'><p>4. Qualification</p></a>
+                <p class="p-element"style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if qualification_details_completed %}Completed{% else %}Pending{% endif %}</p>
+              </div>
+              <div class="progress-element">
+                <a href='/graduation'><p>5. Graduation</p></a>
+                <p class="p-element"style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if graduation_details_completed %}Completed{% else %}Pending{% endif %}</p>
+              </div>
+              <div class="progress-element">
+                <a href='/document'><p>6. Document</p></a>
+                <p class="p-element"style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if document_details_completed %}Completed{% else %}Pending{% endif %}</p>
+              </div>
+              
+            </div>
+            <div class="news-layer" id="scrolling-section">
+              <div id="scroll-content">
+                <h3>News & Updates</h3>
+                <a href="#"
+                >Lorem ipsum, dolor sit amet consectetur adipisicing elit.</a
+                ><br />
+                <a href="#"
+                >Lorem ipsum, dolor sit amet consectetur adipisicing elit.</a
+                ><br />
+                <a href="#"
+                >Lorem ipsum, dolor sit amet consectetur adipisicing elit.</a
+                ><br />
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <script src="" async defer></script>
+  </body>
+</html> {% endcomment %}
+
+
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Dashboard - AMS [VJTI]</title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'styles/dashboard.css' %}" />
+  <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+</head>
+<body>
+  <!-- sidebar -->
+  
+  <div class="main-body">
+    <div class="navbar">
+      <div class="navbar-content">
+        <label for="hamburger-toggle" class="hamburger-icon">
+          <input type="checkbox" id="hamburger-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+        <a href="/signout" class="logout-link">
+          <button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button>
+        </a>
+      </div>
+    </div>
+    
+    
+    <aside class="sidebar">
+      <nav>
+        <div class="sidebar-elements">
+          <div class="student-details">
+            <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"/>
+            {% csrf_token %} 
+            {% if user.is_authenticated %}
+            <h3>{{fname}} {{lname}}</h3>
+            {% endif %}
+          </div>
+          <div class="sidebar-buttons">
+            <div class="route-buttons">
+              <a href="/dashboard" class="button">
+                <i class="bx bxs-widget"></i>
+                <p>Dashboard</p>
+              </a>
+              <a href="/user_profile" class="button">
+                <i class="bx bx-user"></i>
+                <p>My Profile</p>
+              </a>
+              <a href="/application" class="button">
+                <i class="bx bxs-file"></i>
+                <p>Application</p>
+              </a>
+              <a href="/approval" class="button">
+                <i class="bx bxs-file"></i>
+                <p>Approval</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- dashboard -->
+
+    <aside class="dashboard">
+      
+      <div class="content-layers">
+        <div class="top-layer">
+          <div class="top-layer-text">
+            {% if user.is_authenticated %}
+            <h3>Welcome back, {{fname}} {{lname}}!</h3>
+            {% endif %}
+            <p>Let's start by filling out the form</p>
+            <div class="top-layer-apply-button">
+              <a href="application"
+              >Apply Now<span><i class="bx bxs-chevron-right"></i></span
+                ></a></div>
+              </div>
+              <div class="top-layer-img">
+                <img
+                src="{% static 'resources/crs-img-4.svg' %}"
+                alt="top-layer-image"
+                />
+              </div>
+            </div>
+            <div class="bottom-layer">
+              <div class="progress-layer">
+                <h3>Steps to Apply</h3>
+                <div class="progress-element">
+                  <h4>Step Name</h4>
+                  <h4>Status</h4>
+                </div>
+                <div class="progress-element">
+                  <a href='/personal_details'><p>1. Personal Details</p></a>
+                  <p class="p-element" style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if personal_details_completed %}Completed{% else %}Pending{% endif %}</p>
+                </div>
+                <div class="progress-element">
+              <a href='/contact_details'><p>2. Contact Details</p></a>
+              <p class="p-element"style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if contact_details_completed %}Completed{% else %}Pending{% endif %}</p>
+            </div>
+            <div class="progress-element">
+              <a href='/address'><p>3. Address</p></a>
+              <p class="p-element"style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if address_details_completed %}Completed{% else %}Pending{% endif %}</p>
+            </div>
+            <div class="progress-element">
+              <a href='/qualification'><p>4. Qualification</p></a>
+              <p class="p-element"style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if qualification_details_completed %}Completed{% else %}Pending{% endif %}</p>
+            </div>
+            <div class="progress-element">
+              <a href='/graduation'><p>5. Graduation</p></a>
+              <p class="p-element"style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if graduation_details_completed %}Completed{% else %}Pending{% endif %}</p>
+            </div>
+            <div class="progress-element">
+              <a href='/document'><p>6. Document</p></a>
+              <p class="p-element"style="color: {% if personal_details_completed %}green{% else %}red{% endif %}">{% if document_details_completed %}Completed{% else %}Pending{% endif %}</p>
+            </div>
+            
+          </div>
+          <div class="news-layer" id="scrolling-section">
+            <div id="scroll-content">
+              <h3>News & Updates</h3>
+              <a href="#"
+              >Lorem ipsum, dolor sit amet consectetur adipisicing elit.</a
+              ><br />
+              <a href="#"
+              >Lorem ipsum, dolor sit amet consectetur adipisicing elit.</a
+              ><br />
+              <a href="#"
+              >Lorem ipsum, dolor sit amet consectetur adipisicing elit.</a
+              ><br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+  <script src="{% static 'main.js' %}" async defer></script>
+</body>
+</html>
+

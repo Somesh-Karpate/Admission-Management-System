@@ -1,0 +1,308 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+p {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #666;
+}
+
+label {
+    font-size: 16px;
+    color: #333;
+    margin-right: 10px;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* CONSTANTS */
+
+body {
+    margin: 0px;
+    padding: 0px;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .sidebar h3,
+  .sidebar p,
+  .sidebar i {
+    color: white;
+  }
+  
+  .main-body {
+    width: 100%;
+    display: flex;
+  }
+  
+  /* SIDEBAR */
+  
+  .sidebar {
+    display: flex;
+    position: fixed;
+    width: 20%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(160, 27, 0, 1), rgba(255, 160, 18, 1));
+    justify-content: center;
+  }
+  
+  .sidebar-elements {
+    display: flex;
+    flex-flow: column;
+    /* background-color: pink; */
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 25px;
+    
+  }
+  
+  .student-details {
+    /* background-color: red; */
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+  }
+  
+  .student-details img {
+    width: 100px;
+    border-radius: 50%;
+  }
+  
+  .student-details h3 {
+    font-size: 22px;
+  }
+  
+  .sidebar-buttons {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+  }
+  
+  .route-buttons,
+  .logout-buttons {
+    display: flex;
+    flex-flow: column;
+    gap: 20px;
+    align-items: center;
+  }
+  
+  .button {
+    /* background-color: antiquewhite; */
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 16px;
+    padding: 0px 30%;
+    border-radius: 15px;
+    gap: 25px;
+    text-decoration: none;
+    transition: background-color 0.5s ease;
+  }
+  
+  .button:hover {
+    background-color: rgb(251, 158, 65);
+    text-decoration: none;
+  }
+  
+  /* DASHBOARD */
+  
+  .dashboard {
+    background-color: #fff;
+    margin-left: 20%;
+    height: 100%;
+    width: 100vw;
+    display: flex;
+    flex-flow: column;
+  }
+  
+  .chart-layer {
+    display: flex;
+    /* background-color: blue; */
+    justify-content: space-evenly;
+  }
+  
+  .left-chart,
+  .right-chart {
+    background-color: #fff;
+    height: 400px;
+    width: 550px;
+    margin: 50px;
+    border-radius: 25px;
+    filter: none;
+    -webkit-filter: drop-shadow(0px 4px 15px rgb(234, 234, 234));
+  }
+  
+  .application-layer {
+    display: flex;
+    flex-flow: column;
+    margin: 50px;
+    height: 100%;
+    gap: 50px;
+  }
+  
+  .application-details {
+    display: flex;
+    flex-flow: column;
+  }
+  
+  .application {
+    display: grid;
+    height: 100%;
+    align-items: center;
+    grid-template-columns: repeat(5, 1fr); /* Adjust the number of columns as needed */
+    border-bottom: 1px solid rgb(240, 240, 240);
+  }
+  
+  .application .application-status {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 50px;
+    margin: 10px 0px;
+    border-radius: 15px;
+  }
+  
+  .application-status.pending {
+    background-color: red;
+  }
+  
+  .application-status.remark {
+    background-color: yellow;
+  }
+  
+  .application-status.approved {
+    background-color: green;
+  }
+  
+  .application .application-actions {
+    display: flex;
+    gap: 25px;
+    font-size: 24px;
+  }
+  
+  .application-actions .view-form {
+    color: blue;
+  }
+  
+  .application-actions .delete-form {
+    color: red;
+  }
+  
+  .application-footer {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin-left: -50px;
+  }
+  
+  input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 5px;
+  }
+  
+  button[type="submit"] {
+    padding: 8px 16px;
+    background-color: rgb(251, 158, 65);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: rgb(110, 58, 7);
+  }
+
+  .container {
+    display: flex;
+}
+
+.form-container {
+    
+    padding: 20px;
+}
+
+.link-container {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Optional: Style for the link */
+.link-container a {
+    text-decoration: none;
+    color: blue;
+}
+
+.btnn{
+    background-color: orange;
+}
+.btnn:hover{
+    background-color: rgb(86, 62, 16) ;
+}
+.btnn a{
+    color: white;
+
+}
+
+

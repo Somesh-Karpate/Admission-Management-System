@@ -1,0 +1,420 @@
+<!-- user_form_detail.html -->
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Form Detail</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{% static 'styles/detail_view.css' %}" />
+    <!-- Add any additional head content such as stylesheets or scripts -->
+</head>
+<body>
+    <div class="main-body">
+        <!-- sidebar -->
+        <div class="sidebar">
+          <div class="sidebar-elements">
+            <div class="student-details">
+              <img
+                src="../../static/resources/default-user-icon-8.jpg"
+                alt="user-image"
+              />
+              {% if user.is_authenticated %}
+              <h3>{{user.first_name}} {{user.last_name}}</h3>
+              {% endif %}
+            </div>
+            <div class="sidebar-buttons">
+              <div class="route-buttons">
+                <a href="/a_dashboard" class="button">
+                  <i class="bx bxs-widget"></i>
+                  <p>Dashboard</p>
+                </a>
+                {% comment %}
+                <a href="#" class="button">
+                  <i class="bx bxs-file"></i>
+                  <p>Application</p>
+                </a>
+                {% endcomment %}
+                <a href="/course_data" class="button">
+                  <i class="bx bx-folder"></i>
+                  <p>Course Data</p>
+                </a>
+                <a href="/admin_merit_list" class="button">
+                  <i class="bx bx-user"></i>
+                  <p>Merit List</p>
+                </a>
+              </div>
+            </div>
+            <div class="logout-buttons">
+              <a href="/signout" class="button">
+                <i class="bx bx-log-out-circle"></i>
+                <p type="submit">Logout</p>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="dashboard">
+            <div class="application-layer">
+              <div class="application-details">
+                
+    <h1>User Form Detail</h1>
+    <div class="details personal">
+        <h3>Personal Details</h3>
+        <hr>
+        <div class="fields">
+          <div class="input-field">
+            <label>User ID :</label>
+            {{ user_data.user_id }}
+          </div>
+
+          <div class="input-field">
+            <label>First Name : </label>
+            {{ user_data.first_name }}
+          </div>
+          <div class="input-field">
+            <label>Last Name : </label>
+            {{ user_data.last_name }}
+          </div>
+          <div class="input-field">
+            <label>Branch Name : </label>
+            {{ user_data.branch }}
+          </div>
+          <div class="input-field">
+            <label>Gender : </label>
+            {{ user_data.gender }}
+          </div>
+          <div class="input-field">
+            <label>Date of Birth : </label>
+            {{ user_data.date_of_birth }}
+          </div>
+          <div class="input-field">
+            <label>Nationality : </label>
+            {{ user_data.nationality }}
+          </div>
+          <div class="input-field">
+            <label>Annual Income : </label>
+            {{ user_data.annual_income }}
+          </div>
+        </div>
+        </div><br>
+        <div class="details personal">
+            <h3>Contact Details</h3>
+            <hr>
+            <div class="fields">
+            <div class="input-field">
+              <label>Contact Number : </label>
+              {{ user_data.contact_number }}
+            </div>
+            <div class="input-field">
+              <label>Email : </label>
+              {{ user_data.email }}
+            </div>
+            <div class="input-field">
+              <label>Guardian Name : </label>
+              {{ user_data.guardian_name }}
+            </div>
+            <div class="input-field">
+              <label>Guardian Contact : </label>
+              {{ user_data.guardian_contact }}
+            </div>
+          </div>
+        </div><br>
+        <div class="details personal">
+            <h3>Address Details</h3>
+            <hr>
+            <div class="fields">
+            <div class="input-field">
+              <label>Landmark : </label>
+              {{ user_data.landmark }}
+            </div>
+            <div class="input-field">
+              <label>Town City : </label>
+              {{ user_data.town_city }}
+            </div>
+            <div class="input-field">
+              <label>Pincode : </label>
+              {{ user_data.pincode }}
+            </div>
+            <div class="input-field">
+              <label>District : </label>
+              {{ user_data.district }}
+            </div>
+            <div class="input-field">
+              <label>State : </label>
+              {{ user_data.state }}
+            </div>
+            <div class="input-field">
+              <label>Parmanent Address : </label>
+              {{ user_data.permanent_address }}
+            </div>
+          </div>
+        </div><br>
+        <div class="details personal">
+            <h3>Education Details</h3>
+            <hr>
+            <div class="fields">
+            <div class="input-field">
+              <label>University : </label>
+              {{ user_data.uni }}
+            </div>
+            <div class="input-field">
+              <label>Place : </label>
+               {{ user_data.place }}
+            </div>
+            <div class="input-field">
+              <label>Graduation Type : </label>
+              {{ user_data.gtype }}
+            </div>
+            <div class="input-field">
+              <label>Passing Year : </label>
+              {{ user_data.p_year }}
+            </div>
+            <div class="input-field">
+              <label>Graduation status : </label>
+              {{ user_data.gstatus }}</
+            </div>
+        </div>
+    </div><br>
+            <div class="details personal">
+                <h3>Marks Obtained</h3>
+                <hr>
+                <div class="fields">
+            <div class="input-field">
+              <label>Graduation marks : </label>
+              {{ user_data.g_marks }}
+            </div>
+            <div class="input-field">
+              <label>CGPA marks : </label>
+              {{ user_data.cgpa_marks }}
+            </div>
+            <div class="input-field">
+              <label>CGPA OUT OF : </label>
+              {{ user_data.cgpa_outof }}
+            </div>
+            <div class="input-field">
+              <label>CGPA Percent : </label>
+              {{ user_data.cgpa_percent }}
+            </div>
+            <div class="input-field">
+              <label>SSC marks : </label>
+              {{ user_data.ssc_marks }}
+            </div>
+            <div class="input-field">
+              <label>HSC marks : </label>
+              {{ user_data.hsc_marks }}
+            </div>
+            <div class="input-field">
+              <label> HSC OUT OF : </label>
+             {{ user_data.hsc_outof }}
+            </div>
+            <div class="input-field">
+              <label> HSC Percent : </label>
+              {{ user_data.hsc_percent }}
+            </div>
+            <div class="input-field">
+              <label>Maths Marks : </label>
+              {{ user_data.maths_marks }}
+            </div>
+            <div class="input-field">
+              <label>MATHS OUT OF : </label>
+              {{ user_data.maths_outof }}
+            </div>
+            <div class="input-field">
+              <label>Maths Percent : </label>
+              {{ user_data.maths_percent }}
+            </div>
+            <div class="input-field">
+              <label>Science Marks : </label>
+               {{ user_data.science_marks }}
+            </div>
+            <div class="input-field">
+              <label>Science Out of : </label>
+              {{ user_data.science_outof }}
+            </div>
+            <div class="input-field">
+              <label>Science Percent : </label>
+              {{ user_data.science_percent }}
+            </div>
+            <div class="input-field">
+              <label>English Marks : </label>
+              {{ user_data.english_marks }}
+            </div>
+            <div class="input-field">
+              <label>English OUTOF : </label>
+              {{ user_data.english_outof }}
+            </div>
+            <div class="input-field">
+              <label>English Percent : </label>
+              {{ user_data.english_percent }}
+            </div>
+            <div class="input-field">
+              <label> MAHCET SCORE : </label>
+             {{ user_data.mahcet_score }}
+            </div>
+          </div>
+        </div><br>
+        
+        
+    {% comment %} <p>User ID: {{ user_data.user_id }}</p> {% endcomment %}
+    {% comment %} <p>First Name: {{ user_data.first_name }}</p> {% endcomment %}
+    {% comment %} <p>Last Name: {{ user_data.last_name }}</p> {% endcomment %}
+    {% comment %} <p>Branch Name: {{ user_data.branch }}</p> {% endcomment %}
+    {% comment %} <p>Gender: {{ user_data.gender }}</p> {% endcomment %}
+    {% comment %} <p>Date of Birth: {{ user_data.date_of_birth }}</p> {% endcomment %}
+    {% comment %} <p>Nationality: {{ user_data.nationality }}</p> {% endcomment %}
+    {% comment %} <p>Annual Income: {{ user_data.annual_income }}</p> {% endcomment %}
+    {% comment %} <p>Contact Number: {{ user_data.contact_number }}</p> {% endcomment %}
+    {% comment %} <p>Email: {{ user_data.email }}</p> {% endcomment %}
+    {% comment %} <p>Guardian Name: {{ user_data.guardian_name }}</p> {% endcomment %}
+    {% comment %} <p>Guardian Contact: {{ user_data.guardian_contact }}</p> {% endcomment %}
+    {% comment %} <p>Landmark: {{ user_data.landmark }}</p> {% endcomment %}
+    {% comment %} <p>Town City: {{ user_data.town_city }}</p> {% endcomment %}
+    {% comment %} <p>Pincode: {{ user_data.pincode }}</p> {% endcomment %}
+    {% comment %} <p>District: {{ user_data.district }}</p> {% endcomment %}
+    {% comment %} <p>State: {{ user_data.state }}</p> {% endcomment %}
+    {% comment %} <p>Parmanent Address: {{ user_data.permanent_address }}</p> {% endcomment %}
+    {% comment %} <p>University: {{ user_data.uni }}</p> {% endcomment %}
+    {% comment %} <p>Place: {{ user_data.place }}</p> {% endcomment %}
+    {% comment %} <p>Graduation Type: {{ user_data.gtype }}</p> {% endcomment %}
+    {% comment %} <p>Passing Year: {{ user_data.p_year }}</p> {% endcomment %}
+    {% comment %} <p>Graduation status: {{ user_data.gstatus }}</p> {% endcomment %}
+    {% comment %} <p>Graduation marks: {{ user_data.g_marks }}</p> {% endcomment %}
+    {% comment %} <p>CGPA marks: {{ user_data.cgpa_marks }}</p> {% endcomment %}
+    {% comment %} <p>CGPA OUT OF: {{ user_data.cgpa_outof }}</p> {% endcomment %}
+    {% comment %} <p>CGPA Percent: {{ user_data.cgpa_percent }}</p> {% endcomment %}
+    {% comment %} <p>SSC marks: {{ user_data.ssc_marks }}</p> {% endcomment %}
+    {% comment %} <p>HSSC marks: {{ user_data.hsc_marks }}</p> {% endcomment %}
+    {% comment %} <p>HSSC OUT OF: {{ user_data.hsc_outof }}</p> {% endcomment %}
+    {% comment %} <p>HSSC Percent: {{ user_data.hsc_percent }}</p> {% endcomment %}
+    {% comment %} <p>Maths Marks: {{ user_data.maths_marks }}</p> {% endcomment %}
+    {% comment %} <p>MATHS OUT OF: {{ user_data.maths_outof }}</p> {% endcomment %}
+    {% comment %} <p>Maths Percent : {{ user_data.maths_percent }}</p> {% endcomment %}
+    {% comment %} <p>Science Marks : {{ user_data.science_marks }}</p> {% endcomment %}
+    {% comment %} <p>Science Out of : {{ user_data.science_outof }}</p> {% endcomment %}
+    {% comment %} <p>Science Percent : {{ user_data.science_percent }}</p> {% endcomment %}
+    {% comment %} <p>English Marks : {{ user_data.english_marks }}</p> {% endcomment %}
+    {% comment %} <p>English OUTOF : {{ user_data.english_outof }}</p> {% endcomment %}
+    {% comment %} <p>English Percent : {{ user_data.english_percent }}</p> {% endcomment %}
+    {% comment %} <p>MAHCET SCORE : {{ user_data.mahcet_score }}</p> {% endcomment %}
+    
+    <div class="details personal">
+        <h3>Documents</h3>
+        <hr>
+        <div class="fields">
+        <div class="input-field">
+          <label>SSC FILE : <a href="{{ user_data.file_tenth.url }}" target="_blank">View File</a></label>
+        </div>
+        <div class="input-field">
+          <label>HSC FILE:
+            <a href="{{ user_data.file_twelfth.url }}" target="_blank">View File</a></label>
+           
+        </div>
+        <div class="input-field">
+          <label>Leaving Certificate:
+            <a href="{{ user_data.leaving_certificate.url }}" target="_blank">View File</a></label>
+        
+        </div>
+        <div class="input-field">
+          <label>Graduation Marksheet:
+            <a href="{{ user_data.graduation_marksheet.url }}" target="_blank">View File</a></label>
+        </div>
+        <div class="input-field">
+          <label>MAHCET SCORECARD:
+            <a href="{{ user_data.mah_cet_scorecard.url }}" target="_blank">View File</a></label>
+        </div>
+    </div>
+</div><br>
+    
+    {% comment %} <div>
+    <p>SSC FILE:
+    <a href="{{ user_data.file_tenth.url }}" target="_blank">View File</a></p>
+    </div> {% endcomment %}
+
+    {% comment %} <div>
+        <p>HSSC FILE:
+        <a href="{{ user_data.file_twelfth.url }}" target="_blank">View File</a></p>
+    </div> {% endcomment %}
+
+    {% comment %} <div>
+        <p>Leaving Certificate:
+        <a href="{{ user_data.leaving_certificate.url }}" target="_blank">View File</a></p>
+    </div> {% endcomment %}
+    
+    {% comment %} <div>
+        <p>Graduation Marksheet:
+        <a href="{{ user_data.graduation_marksheet.url }}" target="_blank">View File</a></p>
+    </div> {% endcomment %}
+
+    {% comment %} <div>
+        <p>MAHCET SCORECARD:
+        <a href="{{ user_data.mah_cet_scorecard.url }}" target="_blank">View File</a></p>
+    </div> {% endcomment %}
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+    <!-- Display other user details as needed -->
+
+    <!-- Radio buttons for Accept, Reject, and Remark -->
+    <div class="container">
+        <div class="link-container">
+            <button class="btnn"><a href="{% url 'a_dashboard' %}">Back to Admin Page</a></button>
+        </div>
+        <div class="form-container">
+            <form method="POST">
+                {% csrf_token %}
+                <label>
+                    <input type="radio" name="action" value="accept"> Accept
+                </label>
+    
+                <label>
+                    <input type="radio" name="action" value="reject" onclick="toggleRemark()">Reject
+                </label>
+    
+                <!-- Text field for Remark -->
+                <div id="remarkField" style="display: none;">
+                    <label for="remarkText">Remark:</label>
+                    <textarea id="remarkText" name="remark" rows="4" cols="50"></textarea>
+                </div>
+    
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    
+        
+    </div>
+    
+</div>
+</div>
+</div>
+
+    <!-- JavaScript to toggle visibility of the Remark text field -->
+    <script>
+        function toggleRemark() {
+            var remarkField = document.getElementById("remarkField");
+            remarkField.style.display = document.querySelector('input[name="action"]:checked').value === "reject" ? "block" : "none";
+        }
+    </script>
+</div>
+</body>
+</html>

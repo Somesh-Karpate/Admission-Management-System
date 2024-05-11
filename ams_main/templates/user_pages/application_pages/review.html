@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+{%load static%}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>template</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../../static/styles/preview.css" />
+    <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+    <style>
+      /* Modal styles */
+      .modal {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.7);
+          justify-content: center;
+          align-items: center;
+      }
+
+      .modal-content {
+          max-width: 80%;
+          max-height: 80%;
+          overflow: auto;
+      }
+
+      /* Close button styles */
+      .close {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          color: #fff;
+          font-size: 20px;
+          cursor: pointer;
+      }
+  </style>
+  </head>
+
+  <body id="body-pd">
+    <header class="header" id="header">
+        <div class="header__toggle">
+            <i class='bx bx-menu' id="header-toggle"></i>
+        </div>
+
+        <div >
+            <a href="/signout" class="logout-link">
+              <button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button>
+            </a>
+        </div>
+        
+    </header>
+
+    <div class="l-navbar" id="nav-bar">
+        <nav class="nav">
+            <div class="nav__list">
+              <a  class="nav__link">
+                <i class='bx bx-dots-vertical-rounded nav__icon' ></i>
+                <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"style="color:#FFFFFF;
+                width: 100px;
+                border-radius: 50%;"/>
+            </a>
+                
+            {% csrf_token %} 
+                  {% if user.is_authenticated %}
+                  <a  class="nav__link">
+                    <i class='bx bx-tag-alt nav__icon' ></i>
+                    <h3 class="nav__name">{{fname}} {{lname}}</h3>
+                </a>
+                  
+                  {% endif %}
+           
+
+                <div class="nav__list">
+                    <a href="/dashboard" class="nav__link ">
+                    <i class='bx bx-grid-alt nav__icon' ></i>
+                        <span class="nav__name">Dashboard</span>
+                    </a>
+
+                    <a href="/user_profile" class="nav__link ">
+                        <i class='bx bx-user nav__icon' ></i>
+                        <span class="nav__name">My Profile</span>
+                    </a>
+                    
+                    <a href="/application" class="nav__link active">
+                        <i class='bx bxs-file nav__icon' ></i>
+                        <span class="nav__name">Application</span>
+                    </a>
+
+                    <a href="/approval" class="nav__link ">
+                        <i class='bx bx-bookmark nav__icon' ></i>
+                        <span class="nav__name">Approval</span>
+                    </a>
+
+                    <a href="/merit_list" class="nav__link">
+                        <i class='bx bx-folder nav__icon' ></i>
+                        <span class="nav__name">Merit List</span>
+                    </a>
+
+                   
+                </div>
+            </div>
+
+       
+            <a  class="nav__link">
+              <i class='bx bx-timer nav__icon' ></i>
+              <div id="clock"></div>
+          </a>
+              
+        
+        </nav>
+    </div>
+    <br>
+    <div class="container1"> 
+      <h1>Preview</h1>
+      <hr class="hr-text">
+  </div>
+        <!-- START YOUR CODE HERE -->
+        <div class="temp">
+          <div class="container">
+       
+            <form method="POST" action="/preview">
+              <div class="form first">
+                {% csrf_token %}
+                <div class="details personal">
+                  <h3>Personal Details</h3>
+                  <hr>
+                  <div class="fields">
+                    <div class="input-field">
+                      <label>First Name</label>
+                      {{ all_user_data.first_name }}
+                    </div>
+
+                    <div class="input-field">
+                      <label>Last Name</label>
+                      {{ all_user_data.last_name }}
+                    </div>
+                    <div class="input-field">
+                      <label>Gender</label>
+                      {{ all_user_data.gender }}
+                    </div>
+                    <div class="input-field">
+                      <label>Date of Birth</label>
+                      {{ all_user_data.date_of_birth }}
+                    </div>
+                    <div class="input-field">
+                      <label>Nationalty</label>
+                      {{ all_user_data.nationality }}
+                    </div>
+                    <div class="input-field">
+                      <label>Annual Income</label>
+                      {{ all_user_data.annual_income }}
+                    </div>
+                  </div>
+                  </div><br>
+                  <div class="details personal">
+                    <h3>Contact Details</h3>
+                    <hr>
+                    <div class="fields">
+                    <div class="input-field">
+                      <label>Contact No</label>
+                      {{ all_user_data.contact_number }}
+                    </div>
+                    <div class="input-field">
+                      <label>Alternate contact number</label>
+                      {{ all_user_data.alternate_contact_number }}
+                    </div>
+                    <div class="input-field">
+                      <label>Email Id</label>
+                      {{ all_user_data.email }}
+                    </div>
+                    <div class="input-field">
+                      <label>Guardian Name</label>
+                      {{ all_user_data.guardian_name }}
+                    </div>
+                    <div class="input-field">
+                      <label>Guardian Contact Details</label>
+                      {{ all_user_data.guardian_contact }}
+                    </div>
+                  </div>
+                </div><br>
+                  <div class="details personal">
+                    <h3>Address Details</h3>
+                    <hr>
+                    <div class="fields">
+                    <div class="input-field">
+                      <label>Address line 1</label>
+                      {{ all_user_data.address_line1 }}
+                    </div>
+                    <div class="input-field">
+                      <label>Address Line 2</label>
+                      {{ all_user_data.address_line2 }}
+                    </div>
+                    <div class="input-field">
+                      <label>Landmark</label>
+                      {{ all_user_data.landmark }}
+                    </div>
+                    <div class="input-field">
+                      <label>Town/City</label>
+                      {{ all_user_data.town_city }}
+                    </div>
+                    <div class="input-field">
+                      <label>Pincode</label>
+                      {{ all_user_data.pincode }}
+                    </div>
+                    <div class="input-field">
+                      <label>District</label>
+                      {{ all_user_data.district }}
+                    </div>
+                    <div class="input-field">
+                      <label>State</label>
+                      {{ all_user_data.state }}
+                    </div>
+                    <div class="input-field">
+                      <label>Permanent Address</label>
+                      {{ all_user_data.permanent_address }}
+                    </div>
+                  </div>
+                </div><br>
+                  <div class="details personal">
+                    <h3>Qualification Details</h3>
+                    <hr>
+                    <div class="fields">
+                    <div class="input-field">
+                      <label>SSC MARKS</label>
+                      {{ all_user_data.ssc_marks }}
+                    </div>
+                    <div class="input-field">
+                      <label>SSC CUTOFF</label>
+                      {{ all_user_data.ssc_outof }}
+                    </div>
+                    <div class="input-field">
+                      <label>SSC PERCENT</label>
+                      {{ all_user_data.ssc_percent }}
+                    </div>
+                    <div class="input-field">
+                      <label>SSC PERCENT</label>
+                      {{ all_user_data.ssc_percent }}
+                    </div>
+                    <div class="input-field">
+                      <label>HSSC MARKS</label>
+                      {{ all_user_data.hsc_marks }}
+                    </div>
+                    <div class="input-field">
+                      <label>Maths marks</label>
+                      {{ all_user_data.maths_marks }}
+                    </div>
+                    <div class="input-field">
+                      <label>Maths Outof</label>
+                      {{ all_user_data.maths_outof }}
+                    </div>
+                    <div class="input-field">
+                      <label>Maths Percent</label>
+                      {{ all_user_data.maths_percent }}
+                    </div>
+                    <div class="input-field">
+                      <label>Science marks</label>
+                      {{ all_user_data.science_marks }}
+                    </div>
+                    <div class="input-field">
+                      <label>Science Outof</label>
+                      {{ all_user_data.science_outof }}
+                    </div>
+                    <div class="input-field">
+                      <label>Science percent</label>
+                      {{ all_user_data.science_percent }}
+                    </div>
+                    <div class="input-field">
+                      <label>English Marks</label>
+                      {{ all_user_data.english_marks }}
+                    </div>
+                    <div class="input-field">
+                      <label>English Outof</label>
+                      {{ all_user_data.english_outof }}
+                    </div>
+                    <div class="input-field">
+                      <label>English Percent</label>
+                      {{ all_user_data.english_percent }}
+                    </div>
+                  </div>
+                </div><br>
+                  <div class="details personal">
+                    <h3>Documents</h3>
+                    <hr>
+
+                    <div class="fields">
+                    <!-- <div class="input-field">
+                      <label>Tenth File</label>
+                  <a href="{{ all_user_data.file_tenth.url }}" target="_blank">View File</a>
+                    </div> -->
+
+                    <div class="input-field">
+                      <label>Tenth File</label>
+                      <a href="javascript:void(0);" onclick="openModal('{{ all_user_data.file_tenth.url }}')">View File</a>
+                  </div>
+                  
+                  
+
+                    <div class="input-field" >
+                      <label>Twelft File </label>
+                      <a href="javascript:void(0);" onclick="openModal('{{ all_user_data.file_twelfth.url }}')">View File</a>
+                 </div>
+
+                    <div class="input-field">
+                      <label>Leaving Certificate  </label>
+                      <a href="javascript:void(0);" onclick="openModal('{{ all_user_data.leaving_certificate.url }}')">View File</a>
+                    </div>
+
+                    <div class="input-field">
+                      <label>Graduation Marksheet </label>
+                      <a href="javascript:void(0);" onclick="openModal('{{ all_user_data.graduation_marksheet.url }}')">View File</a>
+                    </div>
+
+                    <div class="input-field">
+                      <label>MCA CET Scorecard </label>
+                      <a href="javascript:void(0);" onclick="openModal('{{ all_user_data.mah_cet_scorecard.url }}')">View File</a>
+                    </div>
+
+
+
+                    <!-- Modal -->
+                    <div id="myModal" class="modal">
+                      <div class="modal-content">
+                          <span class="close" onclick="closeModal()">&times;</span>
+                          <div id="modalContent"></div>
+                      </div>
+                  </div>
+
+                  <div id="fileModal" class="file-modal">
+                    <span class="close" onclick="closeFileModal()">&times;</span>
+                    <div id="fileModalContent"></div>
+                </div>
+                <style>
+                  .file-modal {
+                      display: none;
+                      position: fixed;
+                      top: 0;
+                      left: 0;
+                      width: 100%;
+                      height: 100%;
+                      background-color: rgba(0, 0, 0, 0.7);
+                      align-items: center;
+                      justify-content: center;
+                      z-index: 1;
+                  }
+              
+                  #fileModalContent {
+                      max-width: 80%;
+                      max-height: 80%;
+                      overflow: auto;
+                  }
+              
+                  .close {
+                      color: white;
+                      position: absolute;
+                      top: 10px;
+                      right: 10px;
+                      font-size: 20px;
+                      cursor: pointer;
+                  }
+              </style>
+                              
+                  
+
+                  </div>
+                </div><br>
+                  <div class="details personal">
+                    <h3>Graduation Details</h3>
+                    <hr>
+                    <div class="fields">
+                    <div class="input-field">
+                      <label>Graduation Faculty</label>
+                      {{ all_user_data.bachelor }}
+                    </div>
+                    <div class="input-field">
+                      <label>Graduation University</label>
+                      {{ all_user_data.uni }}
+                    </div>
+                    <div class="input-field">
+                      <label>Place of Passing/Appearing For Graduation</label>
+                      {{ all_user_data.place }}
+                    </div>
+                    <div class="input-field">
+                      <label>Graduation Type</label>
+                      {{ all_user_data.gtype }}
+                    </div>
+                    <div class="input-field">
+                      <label>Graduation Passing Year</label>
+                      {{ all_user_data.p_year }}
+                    </div>
+                    <div class="input-field">
+                      <label>Graduation Status</label>
+                      {{ all_user_data.gstatus }}
+                    </div>
+                    <div class="input-field">
+                      <label>Graduation Marks Type</label>
+                      {{ all_user_data.g_marks }}
+                    </div>
+                    <div class="input-field">
+                      <label>CGPA Marks Obtained</label>
+                      {{ all_user_data.cgpa_marks }}
+                    </div>
+                    <div class="input-field">
+                      <label>CGPA Marks Out of</label>
+                      {{ all_user_data.cgpa_outof }}
+                    </div>
+                    <div class="input-field">
+                      <label>CGPA Marks Percentage</label>
+                      {{ all_user_data.cgpa_percent }}
+                    </div>
+                  </div>
+                </div> 
+                <hr>
+              <br>
+                <div class="button-container">
+                <a href="/document" onclick="history.go(-1);" class="backbtn">
+                  <span class="btnText">Back</span>
+                  <i class="uil uil navigator"></i>
+                </a>
+                {% if not is_submitted%}
+                  <button href="/approval" type="submit" class="btn">
+                    <span class="btnText nxtbtn">Final Submit</span>
+                    <i class="uil uil-navigator"></i>
+                </button>
+                {% else %}
+                <a href="/approval" class="nxtbtn">Approval Page</a>
+                {%endif%}
+       
+                
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../../static/styles/script.js" async defer></script>
+    <script>
+      /===== SHOW NAVBAR  =====/ 
+  const showNavbar = (toggleId, navId, bodyId, headerId) =>{
+  const toggle = document.getElementById(toggleId),
+  nav = document.getElementById(navId),
+  bodypd = document.getElementById(bodyId),
+  headerpd = document.getElementById(headerId)
+  
+  // Validate that all variables exist
+  if(toggle && nav && bodypd && headerpd){
+  toggle.addEventListener('click', ()=>{
+      // show navbar
+      nav.classList.toggle('show')
+      // change icon
+      toggle.classList.toggle('bx-x')
+      // add padding to body
+      bodypd.classList.toggle('body-pd')
+      // add padding to header
+      headerpd.classList.toggle('body-pd')
+  })
+  }
+  }
+  
+  showNavbar('header-toggle','nav-bar','body-pd','header')
+  
+  const linkColor = document.querySelectorAll('.nav__link')
+  
+  function colorLink(){
+  if(linkColor){
+  linkColor.forEach(l=> l.classList.remove('active'))
+  this.classList.add('active')
+  }
+  }
+  linkColor.forEach(l=> l.addEventListener('click', colorLink))
+    </script>
+    <script>
+      const clockElement = document.getElementById('clock');
+  
+      function updateTime() {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const timeString = ${hours}:${minutes}:${seconds};
+        clockElement.textContent = timeString;
+      }
+      
+      setInterval(updateTime, 1000); // Update time every second
+      updateTime(); // Initial update
+      
+  
+  </script>
+<script>
+  function openModal(fileUrl) {
+      // Check the file type
+      if (fileUrl.toLowerCase().endsWith('.pdf') || fileUrl.toLowerCase().match(/\.(jpeg|jpg|gif|png)$/) != null) {
+          // If it's a PDF or an image, open it in a new tab
+          window.open(fileUrl, '_blank');
+      } else {
+          // Handle other file types or display an error message
+          console.error('Unsupported file type. Cannot open in a new tab.');
+          // Alternatively, you can open the modal for unsupported file types
+          var modal = document.getElementById("fileModal");
+          var modalContent = document.getElementById("fileModalContent");
+
+          // Clear previous content
+          modalContent.innerHTML = '';
+
+          // Handle other file types or display an error message
+          var errorMessage = document.createElement('p');
+          errorMessage.textContent = 'Unsupported file type';
+          modalContent.appendChild(errorMessage);
+
+          // Display the file modal
+          modal.style.display = "flex";
+      }
+  }
+
+  // Close the file modal if the user clicks outside the modal content
+  window.onclick = function(event) {
+      var fileModal = document.getElementById("fileModal");
+      if (event.target == fileModal) {
+          fileModal.style.display = "none";
+      }
+  }
+</script>
+  <br><br>
+  <footer>
+    <hr class="hr-text">
+    &copy; Copyright © 2024 VJTI Mumbai. All rights reserved.
+  </footer>
+  </body>
+</html>

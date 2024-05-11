@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+{% load static%}
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Merit List</title>
+    <link rel="stylesheet" href="{% static 'styles/merit_list.css' %}">
+    <link rel="icon" type="image/png" href='static/resources/favicon.png' />
+  </head>
+  <body>
+    
+    
+    <header class="header">
+      <div class="header__container">
+          
+          
+          <a href="/signout" class="logout-link">
+              <button class="logout-btn"><i class="bx bx-log-out-circle"></i> Logout</button>
+            </a>
+      </div>
+  </header>
+
+
+  <div class="nav" id="navbar">
+      <nav class="nav__container">
+          <div class="student-details">
+              <img src="{% static 'resources/default-user-icon-8.jpg' %}" alt="user-image"/>
+              {% csrf_token %} 
+              {% if user.is_authenticated %}
+              <h3 class="nav__logo-name">{{fname}} {{lname}}</h3>
+              {% endif %}
+              <div>
+                  <a href="#" class="nav__link nav__logo">
+                      <i class='bx bxs-disc nav__icon nav__name' ></i>
+                      <span class="nav__logo-name">VJTI</span>
+                  </a>
+              </div>
+          </div>
+          
+                  
+                  <div class="nav__list">
+                      <div class="nav__items">
+                          
+                          
+                          <a href="/dashboard" class="nav__link button ">
+                              <i class='bx bxs-widget nav__icon' ></i>
+                              <span class="nav__name">Dashboard</span>
+                          </a>
+                          
+                          
+                          <a href="/user_profile" class="nav__link button ">
+                              <i class='bx bx-user nav__icon' ></i>
+                              <span class="nav__name">My Profile</span>
+                          </a>
+                          
+                          <a href="/application" class="nav__link button ">
+                            <i class='bx bxs-file nav__icon' ></i>
+                            <span class="nav__name">Application</span>
+                        </a>
+                        
+                        
+                        <a href="/approval" class="nav__link button">
+                            <i class='bx bxs-calendar-check	 nav__icon' ></i>
+                            <span class="nav__name">Approval</span>
+                        </a>
+                        <a href="/merit_list" class="nav__link button active">
+                            <i class='bx bxs-dock-left nav__icon' ></i>
+                            <span class="nav__name">Merit List</span>
+                        </a>
+                        <a href="/approval" class="nav__link button">
+                            <i class='bx bxs-file nav__icon' ></i>
+                            <span class="nav__name">Add_1</span>
+                        </a>
+                          
+                          <div class="nav__name" id="date-time">
+                              <span id="current-date"></span>
+                              <br><span id="current-time"></span>
+                              
+                              
+                          </div> 
+                      </div>
+                  </div>
+             
+      </nav>
+  </div>
+  <h1>Merit List</h1>
+    <hr class="hr-text">
+<div class="container_2"><center>
+<h3>VEERMATA JIJABAI TECHNOLOGICAL INSTITUTE</h3>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,
+  molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum
+  numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentium
+  optio, eaque rerum! Provident similique accusantium nemo autem. Veritatis
+  obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquam
+  nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
+  tenetur error, harum nesciunt ipsum debitis quas aliquid.</p>
+</center>
+<div class="search-bar">
+  <form action="/search_student" method="GET">
+    <input type="text" name="query" placeholder="Search by name or ID" />
+    <button type="submit">Search</button>
+  </form>
+</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Name</th>
+          <th>CET Score</th>
+          <th>12th Marks</th>
+          <th>Branch</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for student in context %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ student.first_name }}</td>
+          <td>{{ student.mahcet_score }}</td>
+          <td>{{ student.hsc_percent }}</td>
+          <td>{{ student.branch }}</td>
+          <td>
+            {% if student.user == request.user %}
+            <form method="post" action="/accept_decline_seat">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="accept" />
+              <input type="hidden" name="round" value="{{ selected_round }}" /> <!-- Add round number as hidden input -->
+              <button type="submit">Accept</button>
+            </form>
+            <form method="post" action="/accept_decline_seat">
+              {%csrf_token%}
+              <input type="hidden" name="action" value="decline" />
+              <input type="hidden" name="round" value="{{ selected_round }}" /> <!-- Add round number as hidden input -->
+              <button type="submit">Decline</button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+    <footer>
+      <hr class="hr-text">
+      &copy; Copyright © 2024 VJTI Mumbai. All rights reserved.
+    </footer>
+    <script>
+      // Get the current date and time
+const currentDate = new Date();
+const dateElement = document.getElementById('current-date');
+const timeElement = document.getElementById('current-time');
+
+// Format the date and time
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const formattedDate = currentDate.toLocaleDateString('en-US', options);
+const formattedTime = currentDate.toLocaleTimeString('en-US');
+
+// Update the content of the elements
+dateElement.textContent =  formattedDate;
+timeElement.textContent = formattedTime;
+
+
+  </script>
+  </body>
+</html>
